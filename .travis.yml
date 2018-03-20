@@ -1,18 +1,18 @@
 # spatialdatahub.org-static/.travis.yml
 
 language: node_js
-#
+
 node_js:
   - "8"
-#
-#install:
-#  - "npm install"
-#
-#script:
-#  - "npm run test"
-#  - "npm run build"
-#
-#before_deploy: "echo 'How do I deploy only the correct files?'"
+
+install:
+  - "npm install"
+
+script:
+  - "npm run test"
+  - "npm run build"
+
+before_deploy: "echo 'How do I deploy only the correct files?'"
 
 deploy:
   provider: s3
