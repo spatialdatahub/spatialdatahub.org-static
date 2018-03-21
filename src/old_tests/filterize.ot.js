@@ -1,3 +1,4 @@
+/*
 const filterize = require('../pieces/filterize.js')
 
 describe('filterize.js', function () {
@@ -122,3 +123,4 @@ describe('filterize.js', function () {
   })
 
 })
+*/

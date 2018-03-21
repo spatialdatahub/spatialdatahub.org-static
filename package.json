@@ -1,5 +1,8 @@
 {
   "name": "spatialdatahub.org-static",
+  "jest": {
+      "verbose": true
+  },
   "version": "1.0.0",
   "description": "static files for spatialdatahub.org",
   "main": "index.js",

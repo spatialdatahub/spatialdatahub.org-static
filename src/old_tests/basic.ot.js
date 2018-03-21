@@ -1,3 +1,4 @@
+/*
 const basic = require('../pieces/basic.js')
 
 describe('basic.js file', function () {
@@ -137,3 +138,4 @@ describe('basic.js file', function () {
     })
   })
 })
+*/
