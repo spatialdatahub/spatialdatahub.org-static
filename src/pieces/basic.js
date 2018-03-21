@@ -1,5 +1,5 @@
 // src/pieces/basic.js
-'use strict'
+'use strict';
 
 // toggle active / inactive links in list
 // almost exactly copied from 'youmightnotneedjquery.com'
@@ -20,29 +20,22 @@ const classToggle = function (el, className) {
     }
 };
 
-// This one isn't being used right now, but it is useful if there are different choices
-// that turn eachother on and off
-
 const classToggleOnDiffLink = function (el, elList, className) {
     // Toggle class on element, but with multiple elements.
     // Click element 1 once to turn class on, and click element 2
     // to turn class off for element 1, and to turn class on
     // for element 2.
-
     // Just turn class off for everything in element list,
     // and then add class to element that was clicked.
-
     // first remove className from all elements
     elList.forEach(e => {
         if (e.classList) {
             e.classList.remove(className);
         }
     });
-
-    // then add className to element that was clicked
-    const classes = el.className.split(' ');
-    classes.push(className);
-    el.className = classes.join(' ');
+    // then add className to element that was clicked by
+    // calling the classToggle function defined above
+    classToggle(el, className);
 };
 
 // make function that gets the ext of the url
@@ -53,11 +46,12 @@ const getExt = function (string) {
         ? 'kml'
         : stringLower.endsWith('csv')
         ? 'csv'
-        : /*stringLower.endsWith('tsv') ||*/ stringLower.endsWith('txt')
+        : stringLower.endsWith('tsv') || stringLower.endsWith('txt')
         ? 'tsv'
         : 'geojson';
 };
 
+// do I use this anywhere?
 const addButton = function (text, color, container) {
     const btn = document.createElement('button');
     const value = document.createTextNode(text);

@@ -1,4 +1,4 @@
 // browser.mock.js
-Object.defineProperty(document, 'currentScript', {
-  value: document.createElement('script'),
-});
+//Object.defineProperty(document, 'currentScript', {
+//  value: document.createElement('script'),
+//});

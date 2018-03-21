@@ -1,8 +1,7 @@
 {
   "name": "spatialdatahub.org-static",
   "jest": {
-      "verbose": true,
-      "setupFiles": ["./src/__mocks__/browser.mock.js"]
+      "verbose": true
   },
   "version": "1.0.0",
   "description": "static files for spatialdatahub.org",

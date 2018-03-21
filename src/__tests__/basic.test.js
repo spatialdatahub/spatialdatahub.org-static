@@ -1,158 +1,212 @@
 // test/basic.test.js
 'use strict';
 
-import { classToggle } from '../pieces/basic.js';
+import { classToggle,
+         classToggleOnDiffLink,
+         getExt
+       } from '../pieces/basic.js';
 
-test('classToggle can add class cheese to element', () => {
-    // mock the document
-    const fixture = document.createElement('div');
-    fixture.setAttribute('id', 'fixture');
-    const element = document.createElement('div');
-    element.setAttribute('class', 'nacho');
-    element.setAttribute('id', 'element');
-    fixture.appendChild(element);
+describe('basic.js file tests', () => {
+    describe('classToggle function', () => {
+        // there should be a better way to mock stuff
+        // I should be able to bring in a template to use. I will start by doing it the long way
 
-    expect(element.getAttribute('class')).toBe('nacho');
-    classToggle(element, 'cheese');
-    expect(element.getAttribute('class')).toBe('nacho cheese');
+        test('classToggle can add class "cheese" to element without a class', () => {
+            // mock the document
+            const fixture = document.createElement('div');
+            fixture.setAttribute('id', 'fixture');
+            const element = document.createElement('div');
+            element.setAttribute('id', 'element');
+            fixture.appendChild(element);
+
+            // test the function
+            classToggle(element, 'cheese');
+            expect(element.getAttribute('class')).toBe('cheese');
+        });
+
+        test('classToggle can add class "cheese" to element that already has classes', () => {
+            // mock the document
+            const fixture = document.createElement('div');
+            fixture.setAttribute('id', 'fixture');
+            const element = document.createElement('div');
+            element.setAttribute('class', 'nacho');
+            element.setAttribute('id', 'element');
+            fixture.appendChild(element);
+
+            // test the function
+            expect(element.getAttribute('class')).toBe('nacho');
+            classToggle(element, 'cheese');
+            expect(element.getAttribute('class')).toBe('nacho cheese');
+        });
+
+        test('classToggle can remove class "cheese" from element that has class "cheese"', () => {
+            // mock the document
+            const fixture = document.createElement('div');
+            fixture.setAttribute('id', 'fixture');
+            const element = document.createElement('div');
+            element.setAttribute('class', 'cheese');
+            element.setAttribute('id', 'element');
+            fixture.appendChild(element);
+
+            // test the function
+            expect(element.getAttribute('class')).toBe('cheese');
+            classToggle(element, 'cheese');
+            expect(element.getAttribute('class')).toBe('');
+        });
+
+        test('classToggle can remove class "cheese" from element that has class "nacho cheese"', () => {
+            // mock the document
+            const fixture = document.createElement('div');
+            fixture.setAttribute('id', 'fixture');
+            const element = document.createElement('div');
+            element.setAttribute('class', 'nacho cheese');
+            element.setAttribute('id', 'element');
+            fixture.appendChild(element);
+
+            // test the function
+            expect(element.getAttribute('class')).toBe('nacho cheese');
+            classToggle(element, 'cheese');
+            expect(element.getAttribute('class')).toBe('nacho');
+        });
+    });
+
+    describe('classToggleOnDiffLink function', () => {
+        test('classToggleOnDiffLink removes class "nacho" from el1 when el2 is activated', () => {
+            // mock the document
+            const fixture = document.createElement('fixture');
+            const el1 = document.createElement('div');
+            const el2 = document.createElement('div');
+            el1.setAttribute('class', 'nacho');
+            fixture.appendChild(el1);
+            fixture.appendChild(el2);
+            const elements = [el1, el2];
+
+            // test the function
+            classToggleOnDiffLink(el2, elements, 'nacho');
+            expect(el1.getAttribute('class')).toBe('');
+        });
+
+        test('classToggleOnDiffLink adds class "nacho" from el1 when el2 is activated', () => {
+            // mock the document
+            const fixture = document.createElement('fixture');
+            const el1 = document.createElement('div');
+            const el2 = document.createElement('div');
+            el1.setAttribute('class', '');
+            fixture.appendChild(el1);
+            fixture.appendChild(el2);
+            const elements = [el1, el2];
+
+            // test the function
+            classToggleOnDiffLink(el1, elements, 'nacho');
+            expect(el1.getAttribute('class')).toBe('nacho');
+        });
+    });
+
+    describe('getExt function', () => {
+        test('getExt function returns "kml" from string ending in "kml" (case-insensitive)', () => {
+            const caps = 'nachos.KML';
+            const lower = 'nachos.kml';
+            const mixed = 'nachos.kMl';
+
+            // test the function
+            expect(getExt(caps)).toBe('kml');
+            expect(getExt(lower)).toBe('kml');
+            expect(getExt(mixed)).toBe('kml');
+        });
+
+        test('getExt function returns "csv" from string ending in "csv" (case-insensitive)', () => {
+            const caps = 'nachos.CSV';
+            const lower = 'nachos.csv';
+            const mixed = 'nachos.cSv';
+
+            // test the function
+            expect(getExt(caps)).toBe('csv');
+            expect(getExt(lower)).toBe('csv');
+            expect(getExt(mixed)).toBe('csv');
+        });
+        
+        test('getExt function returns "tsv" from string ending in "tsv" or "txt" (case-insensitive)', () => {
+            const caps_tsv = 'nachos.TSV';
+            const lower_tsv = 'nachos.tsv';
+            const mixed_tsv = 'nachos.tSv';
+            const caps_txt = 'nachos.TXT';
+            const lower_txt = 'nachos.txt';
+            const mixed_txt = 'nachos.txt';
+
+            // test the function
+            expect(getExt(caps_tsv)).toBe('tsv');
+            expect(getExt(lower_tsv)).toBe('tsv');
+            expect(getExt(mixed_tsv)).toBe('tsv');
+            expect(getExt(caps_txt)).toBe('tsv');
+            expect(getExt(lower_txt)).toBe('tsv');
+            expect(getExt(mixed_txt)).toBe('tsv');
+        });
+
+        test('getExt function returns "geojson" from string ending in "json" or "geojson" (case-insensitive)', () => {
+            const caps_json = 'nachos.JSON';
+            const lower_json = 'nachos.json';
+            const mixed_json = 'nachos.JsOn';
+            const caps_geojson = 'nachos.GEOJSON';
+            const lower_geojson = 'nachos.geojson';
+            const mixed_geojson = 'nachos.GeOjSoN';
+
+            // test the function
+            expect(getExt(caps_json)).toBe('geojson');
+            expect(getExt(lower_json)).toBe('geojson');
+            expect(getExt(mixed_json)).toBe('geojson');
+            expect(getExt(caps_geojson)).toBe('geojson');
+            expect(getExt(lower_geojson)).toBe('geojson');
+            expect(getExt(mixed_geojson)).toBe('geojson');
+
+        });
+
+    });
 });
 
 /*
 describe('basic.js file', function () {
-  describe('classToggle', function () {
-    beforeEach( function () {
-      const fixture = document.getElementById('fixture')
-      const element = document.createElement('div')
-      element.setAttribute('class', 'nachos')
-      element.setAttribute('id', 'element')
-      fixture.appendChild(element)
+    describe('getExt', function () {
+
+        it('should return "geojson" from a string ending with "json" (case-insensitive)', function () {
+            const str = 'nachos.JsOn'
+            assert.equal(basic.getExt(str), 'geojson')
+        })
+
+        it('should return "geojson" from string ending with anything other than above cases', function () {
+            const str = 'nachos'
+            assert.equal(basic.getExt(str), 'geojson')
+        })
     })
 
-    afterEach( function () {
-      const fixture = document.getElementById('fixture')
-      const element = document.getElementById('element')
-      fixture.removeChild(element)
+    describe('addButton', function () {
+        afterEach(function () {
+            const fixture = document.getElementById('fixture')
+            fixture.innerHTML = ''
+        })
+
+        it('should add a button to an element', function () {
+            const fixture = document.getElementById('fixture')
+            const btn = basic.addButton('hey now now', 'blue', fixture)
+            assert.equal(btn, fixture.childNodes[0])
+        })
+
+        it('the button should have specific text', function () {
+            const fixture = document.getElementById('fixture')
+            const btn = basic.addButton('hey now now', 'blue', fixture)
+            assert.equal('hey now now', fixture.childNodes[0].value)
+        })
+
+        it('the button should have specific text color', function () {
+            const fixture = document.getElementById('fixture')
+            const btn = basic.addButton('hey now now', 'blue', fixture)
+            assert.equal('blue', fixture.childNodes[0].style.color)
+        })
+
+        it('the button should have specific font weight', function () {
+            const fixture = document.getElementById('fixture')
+            const btn = basic.addButton('hey now now', 'blue', fixture)
+            assert.equal('bold', fixture.childNodes[0].style.fontWeight)
+        })
     })
-
-    it('the element should have the class "nachos" already', function () {
-      const element = document.getElementById('element')
-      assert.equal(element.getAttribute('class'), 'nachos')
-    })
-
-    it('classToggle should remove the class "nachos" from the element', function () {
-      const element = document.getElementById('element')
-      basic.classToggle(element, 'nachos')
-      assert.equal(element.getAttribute('class'), '')
-    })
-
-    it('classToggle should add the class "steve" from the element', function () {
-      const element = document.getElementById('element')
-      basic.classToggle(element, 'steve')
-      assert.equal(element.getAttribute('class'), 'nachos steve')
-    })
-  })
-
-  describe('classToggleOnDifferentLink', function () {
-    beforeEach( function () {
-      const fixture = document.getElementById('fixture')
-
-      const element1 = document.createElement('div')
-      const element2 = document.createElement('div')
-
-      element1.setAttribute('class', 'nachos')
-
-      element1.setAttribute('id', 'element1')
-      element2.setAttribute('id', 'element2')
-
-      fixture.appendChild(element1)
-      fixture.appendChild(element2)
-    })
-
-    afterEach( function () {
-      const fixture = document.getElementById('fixture')
-      const element1 = document.getElementById('element1')
-      const element2 = document.getElementById('element2')
-      fixture.removeChild(element1)
-      fixture.removeChild(element2)
-    })
-
-    it('classToggleOnDifferentLink should remove the class "nachos" from element1', function () {
-      const element1 = document.getElementById('element1')
-      const element2 = document.getElementById('element2')
-      const elements = [element1, element2]
-
-      // call the function on the element without the class, element 2
-      basic.classToggleOnDiffLink(element2, elements, 'nachos')
-
-      assert.equal(element1.getAttribute('class'), '')
-    })
-
-    it('classToggleOnDifferentLink should add the class "nachos" to element2', function () {
-      const element1 = document.getElementById('element1')
-      const element2 = document.getElementById('element2')
-      const elements = [element1, element2]
-
-      // call the function on the element without the class
-      basic.classToggleOnDiffLink(element2, elements, 'nachos')
-
-      // I should fix this so it doesn't have a space first, but I has to be there if there are
-      // more classes on the element... so if it's the only class the space should be removed
-      // otherwise it should keep the space...
-      assert.equal(element2.getAttribute('class'), ' nachos')
-    })
-  })
-
-  describe('getExt', function () {
-    it('should return "kml" from a string ending with "kml" (case-insensitive)', function () {
-      const str = 'nachos.kMl'
-      assert.equal(basic.getExt(str), 'kml')
-    })
-
-    it('should return "csv" from a string ending with "csv" (case-insensitive)', function () {
-      const str = 'nachos.Csv'
-      assert.equal(basic.getExt(str), 'csv')
-    })
-
-    it('should return "geojson" from a string ending with "json" (case-insensitive)', function () {
-      const str = 'nachos.JsOn'
-      assert.equal(basic.getExt(str), 'geojson')
-    })
-
-    it('should return "geojson" from string ending with anything other than above cases', function () {
-      const str = 'nachos'
-      assert.equal(basic.getExt(str), 'geojson')
-    })
-  })
-
-  describe('addButton', function () {
-    afterEach(function () {
-      const fixture = document.getElementById('fixture')
-      fixture.innerHTML = ''
-    })
-
-    it('should add a button to an element', function () {
-      const fixture = document.getElementById('fixture')
-      const btn = basic.addButton('hey now now', 'blue', fixture)
-      assert.equal(btn, fixture.childNodes[0])
-    })
-
-    it('the button should have specific text', function () {
-      const fixture = document.getElementById('fixture')
-      const btn = basic.addButton('hey now now', 'blue', fixture)
-      assert.equal('hey now now', fixture.childNodes[0].value)
-    })
-
-    it('the button should have specific text color', function () {
-      const fixture = document.getElementById('fixture')
-      const btn = basic.addButton('hey now now', 'blue', fixture)
-      assert.equal('blue', fixture.childNodes[0].style.color)
-    })
-
-    it('the button should have specific font weight', function () {
-      const fixture = document.getElementById('fixture')
-      const btn = basic.addButton('hey now now', 'blue', fixture)
-      assert.equal('bold', fixture.childNodes[0].style.fontWeight)
-    })
-  })
 })
 */
