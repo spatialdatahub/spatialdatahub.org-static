@@ -3,8 +3,18 @@
 
 import { classToggle } from '../pieces/basic.js';
 
-test('classToggle can add class nachos to element', () => {
-    
+test('classToggle can add class cheese to element', () => {
+    // mock the document
+    const fixture = document.createElement('div');
+    fixture.setAttribute('id', 'fixture');
+    const element = document.createElement('div');
+    element.setAttribute('class', 'nacho');
+    element.setAttribute('id', 'element');
+    fixture.appendChild(element);
+
+    expect(element.getAttribute('class')).toBe('nacho');
+    classToggle(element, 'cheese');
+    expect(element.getAttribute('class')).toBe('nacho cheese');
 });
 
 /*
