@@ -1,6 +1,6 @@
 // test/basic.test.js
+'use strict';
 
-//const basic = require('../src/pieces/basic.js');
 import { classToggle } from '../pieces/basic.js';
 
 test('classToggle can add class nachos to element', () => {

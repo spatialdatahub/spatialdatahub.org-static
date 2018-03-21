@@ -1,4 +1,5 @@
 // src/pieces/basic.js
+'use strict'
 
 // toggle active / inactive links in list
 // almost exactly copied from 'youmightnotneedjquery.com'
