@@ -6,7 +6,8 @@
   "scripts": {
     "build": "browserify src/index.js -t babelify -o build/js/index.js -t",
     "dev": "watchify src/index.js -t babelify -o build/js/index.js -t",
-    "test": "jest"
+    "test": "jest",
+    "test-watch": "jest --verbose --watch"
   },
   "repository": {
     "type": "git",
