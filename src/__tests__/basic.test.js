@@ -1,6 +1,11 @@
 // test/basic.test.js
 
-const basic = require('../src/pieces/basic.js');
+//const basic = require('../src/pieces/basic.js');
+import { classToggle } from '../pieces/basic.js';
+
+test('classToggle can add class nachos to element', () => {
+    
+});
 
 /*
 describe('basic.js file', function () {
