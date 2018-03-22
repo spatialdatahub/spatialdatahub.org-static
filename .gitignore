@@ -1,5 +1,5 @@
 # ignore the js build file, just build it on deployment
-/build/js/bundle.js
+build/js/bundle.js
 
 # Logs
 logs
