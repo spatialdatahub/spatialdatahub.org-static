@@ -1,3 +1,7 @@
+// spatialdatahub.org-static/src/bundle.js
+
+console.log('spatialdatahub.org-static');
+
 const L = require('leaflet')
 
 const within = require('@turf/within')

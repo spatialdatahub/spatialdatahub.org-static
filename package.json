@@ -1,14 +1,14 @@
 {
   "name": "spatialdatahub.org-static",
   "jest": {
-      "verbose": true
+    "verbose": true
   },
   "version": "1.0.0",
   "description": "static files for spatialdatahub.org",
   "main": "index.js",
   "scripts": {
-    "build": "browserify src/index.js -t babelify -o build/js/index.js -t",
-    "dev": "watchify src/index.js -t babelify -o build/js/index.js -t",
+    "build": "browserify src/bundle.js -t babelify -o build/js/bundle.js -t",
+    "dev": "watchify src/bundle.js -t babelify -o build/js/bundle.js -t",
     "test": "jest",
     "test-watch": "jest --verbose --watch"
   },
@@ -34,5 +34,14 @@
     "jest": "^22.4.2",
     "regenerator-runtime": "^0.11.1",
     "watchify": "^3.11.0"
+  },
+  "dependencies": {
+    "@mapbox/leaflet-omnivore": "^0.3.4",
+    "@turf/helpers": "^6.0.1",
+    "@turf/within": "^4.7.3",
+    "easy-nominatim": "^1.0.4",
+    "file-saver": "^1.3.4",
+    "leaflet": "^1.3.1",
+    "leaflet.markercluster": "^1.3.0"
   }
 }
