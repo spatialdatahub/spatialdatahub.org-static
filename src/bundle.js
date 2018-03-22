@@ -1,6 +1,7 @@
 // spatialdatahub.org-static/src/bundle.js
 
 console.log('spatialdatahub.org-static');
+console.log('Test ignore build/js/bundle.js');
 
 const L = require('leaflet')
 
