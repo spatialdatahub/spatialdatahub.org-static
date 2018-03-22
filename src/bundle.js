@@ -1,24 +1,23 @@
 // spatialdatahub.org-static/src/bundle.js
 
 console.log('spatialdatahub.org-static');
-console.log('Test ignore build/js/bundle.js');
 
-const L = require('leaflet')
+const L = require('leaflet');
 
-const within = require('@turf/within')
+const within = require('@turf/within');
 
-import { feature, featureCollection } from '@turf/helpers'
-import { getPlaceData, nominatim, normalizeGeoJSON, possiblePlaces } from 'easy-nominatim'
+import { feature, featureCollection } from '@turf/helpers';
+import { getPlaceData, nominatim, normalizeGeoJSON, possiblePlaces } from 'easy-nominatim';
 
-const markercluster = require('leaflet.markercluster')
-const filesaver = require('file-saver')
+const markercluster = require('leaflet.markercluster');
+const filesaver = require('file-saver');
 
-const basic = require('./pieces/basic.js')
-const mapFunctions = require('./pieces/mapFunctions.js')
+const basic = require('./pieces/basic.js'); // tested
+const mapFunctions = require('./pieces/mapFunctions.js');
 //const datasetList = require('./pieces/datasetList.js')
-const editMap = require('./pieces/editMap.js')
+const editMap = require('./pieces/editMap.js');
 
-const filterize = require('./pieces/filterize.js')
+const filterize = require('./pieces/filterize.js');
 
 
 
@@ -46,42 +45,42 @@ const filterize = require('./pieces/filterize.js')
 // ////////////////////////////////////////////////////////////////////////////
 
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">
+    attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">
   OpenStreetMap</a>`,
-  minZoom: 2,
-  maxZoom: 19
+    minZoom: 2,
+    maxZoom: 19
 })
 
 const stamenToner = L.tileLayer(`https://stamen-tiles-{s}.a.ssl.fastly.net/
 toner/{z}/{x}/{y}.{ext}`, {
-  attribution: `Map tiles by <a href="https://stamen.com">Stamen Design</a>,
+    attribution: `Map tiles by <a href="https://stamen.com">Stamen Design</a>,
   <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>
   &mdash; Map data &copy;
   <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>`,
-  subdomains: 'abcd',
-  minZoom: 2,
-  maxZoom: 19,
-  ext: 'png'
+    subdomains: 'abcd',
+    minZoom: 2,
+    maxZoom: 19,
+    ext: 'png'
 })
 
 const esriWorldImagery = L.tileLayer(`https://server.arcgisonline.com/ArcGIS/
 rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}`, {
-  attribution: `Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA,
+    attribution: `Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA,
   USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP,
   and the GIS User Community`
 })
 
 const myMap = L.map('mapid', {
-  center: {lat: 0, lng: 8.8460},
-  zoom: 2,
-  layers: osm,
-  scrollWheelZoom: false
+    center: {lat: 0, lng: 8.8460},
+    zoom: 2,
+    layers: osm,
+    scrollWheelZoom: false
 })
 
 const baseLayers = {
-  'Open Street Maps': osm,
-  'Black and White': stamenToner,
-  'ESRI World Map': esriWorldImagery
+    'Open Street Maps': osm,
+    'Black and White': stamenToner,
+    'ESRI World Map': esriWorldImagery
 }
 
 const baseLayerControl = L.control.layers(baseLayers)
@@ -102,25 +101,25 @@ L.control.togglescrollbutton({position: 'topleft'}).addTo(myMap)
 
 // Trying to add 'alt' to tile layers
 osm.on('tileload', function (tileEvent) {
-  tileEvent.tile.setAttribute('alt', 'Open Street Map Tile Layer')
+    tileEvent.tile.setAttribute('alt', 'Open Street Map Tile Layer')
 })
 
 stamenToner.on('tileload', function (tileEvent) {
-  tileEvent.tile.setAttribute('alt', 'Stamen Toner black and white tile layers')
+    tileEvent.tile.setAttribute('alt', 'Stamen Toner black and white tile layers')
 })
 
 esriWorldImagery.on('tileload', function (tileEvent) {
-  tileEvent.tile.setAttribute('alt', 'ESRI World Imagery Tile')
+    tileEvent.tile.setAttribute('alt', 'ESRI World Imagery Tile')
 })
 
 /*
-Example of image overlay, going to use this type of stuff to add lines at tropics and
-sub tropics
+  Example of image overlay, going to use this type of stuff to add lines at tropics and
+  sub tropics
 
-var imageUrl = 'http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg'
-var imageBounds = [[40.712216, -74.22655], [40.773941, -74.12544]];
+  var imageUrl = 'http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg'
+  var imageBounds = [[40.712216, -74.22655], [40.773941, -74.12544]];
 
-L.imageOverlay(imageUrl, imageBounds).addTo(myMap);
+  L.imageOverlay(imageUrl, imageBounds).addTo(myMap);
 */
 
 // ////////////// //
@@ -140,11 +139,11 @@ let linkDatasetColorCounter = 0 // this is for the datasets from the links
 
 // pointMarkerOptions
 const markerOptions = {
-  radius: 6,
-  color: 'black',
-  weight: 1.5,
-  opacity: 1,
-  fillOpacity: 0.4
+    radius: 6,
+    color: 'black',
+    weight: 1.5,
+    opacity: 1,
+    fillOpacity: 0.4
 }
 
 const datasetLinksNodeList = document.getElementsByName('dataset')
@@ -162,115 +161,115 @@ let layerClusterState = 0 // 0 is layers, 1 is clusters. // something is wrong
 
 
 datasetLinks.forEach(function handleDatasetLink (link) {
-  const pk = link.id
-  const ext = link.getAttribute('value') // I have to use this because 'value' is a loaded arguement
-  const url = mapFunctions.returnCorrectUrl(link, pk)
+    const pk = link.id
+    const ext = link.getAttribute('value') // I have to use this because 'value' is a loaded arguement
+    const url = mapFunctions.returnCorrectUrl(link, pk)
 
-  // deal with colors
-  // this can be lifted... does it need to be?
-  linkDatasetColorCounter++
-  const color = colors[linkDatasetColorCounter % colors.length]
-  // a new layer needs to be created for every link
-  const layerMod = mapFunctions.returnLayer(color, mapFunctions.addPopups, markerOptions)
-  // a new cluster layer needs to be created for every link
-  const layerCluster = mapFunctions.returnCluster(color)
+    // deal with colors
+    // this can be lifted... does it need to be?
+    linkDatasetColorCounter++
+    const color = colors[linkDatasetColorCounter % colors.length]
+    // a new layer needs to be created for every link
+    const layerMod = mapFunctions.returnLayer(color, mapFunctions.addPopups, markerOptions)
+    // a new cluster layer needs to be created for every link
+    const layerCluster = mapFunctions.returnCluster(color)
 
-// I don't like this
-// It's just not working
-// what are the functions I would need to define to break this up?
+    // I don't like this
+    // It's just not working
+    // what are the functions I would need to define to break this up?
 
-// addDataToContainer // I've already made and deleted this one
-// return original data after callback
-// return modified data after callback
+    // addDataToContainer // I've already made and deleted this one
+    // return original data after callback
+    // return modified data after callback
 
-// this is my handle promise stuff
-/*
-const extSelectAndThenLayer = function (map, ext, url) {
-  mapFunctions.extSelect(ext, url)
-    .then(res => layerMod.addData(res.toGeoJSON()))
-    .then(lm => datasets[pk] = lm)
-    .then(lm => {
+    // this is my handle promise stuff
+    /*
+      const extSelectAndThenLayer = function (map, ext, url) {
+      mapFunctions.extSelect(ext, url)
+      .then(res => layerMod.addData(res.toGeoJSON()))
+      .then(lm => datasets[pk] = lm)
+      .then(lm => {
       map.addLayer(lm).fitBounds(layerMod.getBounds())
       return lm
-    })
-    .then(lm => layerCluster.addLayer(lm))
-    .then(lc => datasetClusters[pk] = lc)
-    .catch(error => console.log(error))
-}
-*/
+      })
+      .then(lm => layerCluster.addLayer(lm))
+      .then(lc => datasetClusters[pk] = lc)
+      .catch(error => console.log(error))
+      }
+    */
 
-  // how do I lift this?
-  const linkEvent = function (link, map) {
-    basic.classToggle(link, 'active')
+    // how do I lift this?
+    const linkEvent = function (link, map) {
+        basic.classToggle(link, 'active')
 
-            //
-      //mapFunctions.layerLoadOrOnMap(map, datasets, pk, mapFunctions.extSelect(ext, url))
-      //mapFunctions.layerLoadOrOnMap(map, datasets, pk, extSelect(ext, url, mapFunctions.handlePromiseLayer(map, layerMod, layerCluster, datasets, datasetClusters, key)))
+        //
+        //mapFunctions.layerLoadOrOnMap(map, datasets, pk, mapFunctions.extSelect(ext, url))
+        //mapFunctions.layerLoadOrOnMap(map, datasets, pk, extSelect(ext, url, mapFunctions.handlePromiseLayer(map, layerMod, layerCluster, datasets, datasetClusters, key)))
 
-            //
-    // start simple, then make it into nice functions. It'll be ugly and hacky, then refactored to something good
-    if (layerClusterState === 0) {
-      datasets[pk]
-        ? myMap.hasLayer(datasets[pk])
-          ? myMap.removeLayer(datasets[pk])
-          : myMap.addLayer(datasets[pk])
-        : mapFunctions.extSelect(ext, url)
-          // convert data to geojson and add it to layerMod
-          .then(res => layerMod.addData(res.toGeoJSON())) // return layerMod
-          // add layerMod to datasetsContainer[key], return layerMod
-          .then(lm => datasets[pk] = lm)
-          // add layerMod to the map, return layerMod
-          .then(lm => {
-            map.addLayer(lm).fitBounds(layerMod.getBounds())
-            return lm
-          })
-          // add layerMod to the layerCluster, return layerCluster
-          .then(lm => layerCluster.addLayer(lm))
-          // add layerCluster to the clusterContainer
-          .then(lc => datasetClusters[pk] = lc)
-          // catch any errors and log them
-          .catch(error => console.log(error))
-    } else {
-    //  mapFunctions.layerLoadOrOnMap(map, datasetClusters, pk, mapFunctions.extSelect(ext, url))
-        // convert data to geojson and add it to layerMod
-      datasets[pk]
-        ? myMap.hasLayer(datasetClusters[pk])
-          ? myMap.removeLayer(datasetClusters[pk])
-          : myMap.addLayer(datasetClusters[pk])
-        : mapFunctions.extSelect(ext, url)
-       
-          .then(res => layerMod.addData(res.toGeoJSON())) // return layerMod
-          // add layerMod to datasetsContainer[key], return layerMod
-          .then(lm => {
-            datasets[pk] = lm
-            return lm
-          })
+        //
+        // start simple, then make it into nice functions. It'll be ugly and hacky, then refactored to something good
+        if (layerClusterState === 0) {
+            datasets[pk]
+                ? myMap.hasLayer(datasets[pk])
+                ? myMap.removeLayer(datasets[pk])
+                : myMap.addLayer(datasets[pk])
+            : mapFunctions.extSelect(ext, url)
+            // convert data to geojson and add it to layerMod
+                .then(res => layerMod.addData(res.toGeoJSON())) // return layerMod
+            // add layerMod to datasetsContainer[key], return layerMod
+                .then(lm => datasets[pk] = lm)
+            // add layerMod to the map, return layerMod
+                .then(lm => {
+                    map.addLayer(lm).fitBounds(layerMod.getBounds())
+                    return lm
+                })
+            // add layerMod to the layerCluster, return layerCluster
+                .then(lm => layerCluster.addLayer(lm))
+            // add layerCluster to the clusterContainer
+                .then(lc => datasetClusters[pk] = lc)
+            // catch any errors and log them
+                .catch(error => console.log(error))
+        } else {
+            //  mapFunctions.layerLoadOrOnMap(map, datasetClusters, pk, mapFunctions.extSelect(ext, url))
+            // convert data to geojson and add it to layerMod
+            datasets[pk]
+                ? myMap.hasLayer(datasetClusters[pk])
+                ? myMap.removeLayer(datasetClusters[pk])
+                : myMap.addLayer(datasetClusters[pk])
+            : mapFunctions.extSelect(ext, url)
+            
+                .then(res => layerMod.addData(res.toGeoJSON())) // return layerMod
+            // add layerMod to datasetsContainer[key], return layerMod
+                .then(lm => {
+                    datasets[pk] = lm
+                    return lm
+                })
 
-          // add layerMod to the layerCluster, return layerCluster
-          .then(lm => layerCluster.addLayer(lm))
+            // add layerMod to the layerCluster, return layerCluster
+                .then(lm => layerCluster.addLayer(lm))
 
-          // add layerCluster to the clusterContainer
-          .then(lc => datasetClusters[pk] = lc)
+            // add layerCluster to the clusterContainer
+                .then(lc => datasetClusters[pk] = lc)
 
-          // add layer Cluster to the map, return layerCluster
-          .then(lc => map.addLayer(lc).fitBounds(layerMod.getBounds()))
+            // add layer Cluster to the map, return layerCluster
+                .then(lc => map.addLayer(lc).fitBounds(layerMod.getBounds()))
 
-          // catch any errors and log them
-          .catch(error => console.log(error))
+            // catch any errors and log them
+                .catch(error => console.log(error))
+        }
+        activeDatasetButtons.push(link)
     }
-    activeDatasetButtons.push(link)
-  }
 
-  // if there is only a single dataset for the page, call the event, else
-  // wait for the buttons to be pressed
+    // if there is only a single dataset for the page, call the event, else
+    // wait for the buttons to be pressed
 
-  // ok... why isn't getCSV working here? Is it an async issue? This seems to be
-  // linkEvent works on the same csv file when it's part of a list, and 
-  // the geojson single dataset pages work
-  // how does a kml file work? No. There is a problem with the kml file as well
-  link.getAttribute('detail')
-    ? linkEvent(link, myMap)
-    : link.addEventListener('click', () => linkEvent(link, myMap))
+    // ok... why isn't getCSV working here? Is it an async issue? This seems to be
+    // linkEvent works on the same csv file when it's part of a list, and 
+    // the geojson single dataset pages work
+    // how does a kml file work? No. There is a problem with the kml file as well
+    link.getAttribute('detail')
+        ? linkEvent(link, myMap)
+        : link.addEventListener('click', () => linkEvent(link, myMap))
 })
 
 
@@ -286,8 +285,8 @@ const showFindPlaceContainerButton = document.getElementById('show_find_place_co
 const findPlaceContainer = document.getElementById('find_place_container')
 
 showFindPlaceContainerButton.addEventListener('click', () => {
-  basic.classToggle(showFindPlaceContainerButton, 'active')
-  editMap.showPlaceContainer(findPlaceContainer)
+    basic.classToggle(showFindPlaceContainerButton, 'active')
+    editMap.showPlaceContainer(findPlaceContainer)
 })
 
 // (2) get elements
@@ -305,66 +304,66 @@ activeDatasetButtons.push(/*placeButton,*/ placeToggle, selectButton)
 
 // this is going to need to be used to make selector too
 function makeSelectorOptions (array) {
-  selector.innerHTML = ''
-  array.forEach(place => {
-    const option = document.createElement('option')
-    option.value = place.display_name
-    const text = document.createTextNode(place.display_name)
-    option.appendChild(text)
-    selector.appendChild(option)
+    selector.innerHTML = ''
+    array.forEach(place => {
+        const option = document.createElement('option')
+        option.value = place.display_name
+        const text = document.createTextNode(place.display_name)
+        option.appendChild(text)
+        selector.appendChild(option)
 
-    const lyr = L.geoJson(place.geojson)
-    possiblePlaceLayers[place.display_name] = lyr
-  })
+        const lyr = L.geoJson(place.geojson)
+        possiblePlaceLayers[place.display_name] = lyr
+    })
 }
 
 // add place(s) to the selector
 /*
-placeButton.addEventListener('click', function findPlace () {
+  placeButton.addEventListener('click', function findPlace () {
   const val = placeInput.value
   en.getPlaceData(val, makeSelectorOptions)
-})
+  })
 */
 
 // now the event fires on the enter key press and when the focus
 // shifts to a separate element
 placeInput.addEventListener('keydown', function findPlace(e) {
-  if (e.keyCode === 13) {
-    const val = placeInput.value
-    en.getPlaceData(val, makeSelectorOptions)
-  }
+    if (e.keyCode === 13) {
+        const val = placeInput.value
+        en.getPlaceData(val, makeSelectorOptions)
+    }
 })
 
 /*
-placeInput.addEventListener('blur', function findPlace() {
+  placeInput.addEventListener('blur', function findPlace() {
   const val = placeInput.value
   en.getPlaceData(val, makeSelectorOptions)
-})
+  })
 */
 
 
 // select place to display
 selectButton.addEventListener('click', function selectPlace () {
 
-  Object.keys(possiblePlaceLayers).forEach(n => {
-    const p = possiblePlaceLayers[n]
-    myMap.removeLayer(p)
-  })
+    Object.keys(possiblePlaceLayers).forEach(n => {
+        const p = possiblePlaceLayers[n]
+        myMap.removeLayer(p)
+    })
 
-  selectedPlace.length !== 0
-    ? (selectedPlace.pop(), selectedPlace.push(possiblePlaceLayers[selector.value]))
-    : selectedPlace.push(possiblePlaceLayers[selector.value])
+    selectedPlace.length !== 0
+        ? (selectedPlace.pop(), selectedPlace.push(possiblePlaceLayers[selector.value]))
+        : selectedPlace.push(possiblePlaceLayers[selector.value])
 
-  const lyr = selectedPlace[0]
-  lyr.addTo(myMap)
-  myMap.fitBounds(lyr.getBounds())
+    const lyr = selectedPlace[0]
+    lyr.addTo(myMap)
+    myMap.fitBounds(lyr.getBounds())
 })
 
 // map and layer should be arguements for a predefined function
 placeToggle.addEventListener('click', () => {
-  myMap.hasLayer(selectedPlace[0])
-    ? myMap.removeLayer(selectedPlace[0])
-    : myMap.addLayer(selectedPlace[0])
+    myMap.hasLayer(selectedPlace[0])
+        ? myMap.removeLayer(selectedPlace[0])
+        : myMap.addLayer(selectedPlace[0])
 })
 
 // /////////////////////////////////////////////////////////////////////////
@@ -381,11 +380,11 @@ const testUrlContainer = document.getElementById('test_url_container')
 
 showTestUrlContainerButton.addEventListener('click', function showTestUrlContainer () {
 
-  basic.classToggle(showTestUrlContainerButton, 'active')
+    basic.classToggle(showTestUrlContainerButton, 'active')
 
-  testUrlContainer.style.display === 'none' || testUrlContainer.style.display === ''
-    ? testUrlContainer.style.display = 'block'
-    : testUrlContainer.style.display = 'none'
+    testUrlContainer.style.display === 'none' || testUrlContainer.style.display === ''
+        ? testUrlContainer.style.display = 'block'
+        : testUrlContainer.style.display = 'none'
 })
 
 // (2) get elements
@@ -398,82 +397,82 @@ let testDatasetCount = 0
 
 // pointMarkerOptions
 const testUrlMarkerOptions = {
-  radius: 6,
-  color: 'white',
-  weight: 1.5,
-  opacity: 1,
-  fillOpacity: 0.4
+    radius: 6,
+    color: 'white',
+    weight: 1.5,
+    opacity: 1,
+    fillOpacity: 0.4
 }
 
 
 function getDataFromTestUrl () {
-  // get ext and url
-  const ext = basic.getExt(testUrlInput.value)
-  const url = testUrlInput.value
+    // get ext and url
+    const ext = basic.getExt(testUrlInput.value)
+    const url = testUrlInput.value
 
-  // increment the color counter
-  testDatasetCount++
-  const testDatasetColor = colors[testDatasetCount % colors.length]
+    // increment the color counter
+    testDatasetCount++
+    const testDatasetColor = colors[testDatasetCount % colors.length]
 
-  // get the data with the correct ext, why is this stuff different than
-  // the  functions we already have? I'll refactor later
-  mapFunctions.extSelect(ext, url)
-    .then(function handleResponse (response) {
-      // make this into a layer
-      // this should be lifted from this function
-      const layerMod = L.geoJson(null, {
-        // set the points to little circles
-        pointToLayer: (feature, latlng) => {
-          return L.circleMarker(latlng, markerOptions)
-        },
-        onEachFeature: (feature, layer) => {
-          // make sure the fill is the color
-          layer.options.fillColor = testDatasetColor
-          // and make sure the perimiter is black (if it's a point) and the color otherwise
-          feature.geometry.type === 'Point'
-            ? layer.options.color = 'white'
-            : layer.options.color = testDatasetColor
-          // add those popups
-          mapFunctions.addPopups(feature, layer) // this comes from the index_maps.js file
-        }
-      })
+    // get the data with the correct ext, why is this stuff different than
+    // the  functions we already have? I'll refactor later
+    mapFunctions.extSelect(ext, url)
+        .then(function handleResponse (response) {
+            // make this into a layer
+            // this should be lifted from this function
+            const layerMod = L.geoJson(null, {
+                // set the points to little circles
+                pointToLayer: (feature, latlng) => {
+                    return L.circleMarker(latlng, markerOptions)
+                },
+                onEachFeature: (feature, layer) => {
+                    // make sure the fill is the color
+                    layer.options.fillColor = testDatasetColor
+                    // and make sure the perimiter is black (if it's a point) and the color otherwise
+                    feature.geometry.type === 'Point'
+                        ? layer.options.color = 'white'
+                        : layer.options.color = testDatasetColor
+                    // add those popups
+                    mapFunctions.addPopups(feature, layer) // this comes from the index_maps.js file
+                }
+            })
 
-      // if the response is good then add abutton for it
-      // Ugh, I'm using the 'this' keyword. Not cool.
-      // refactor later
-      const btn = basic.addButton(testDatasetCount, testDatasetColor, testUrls)
+            // if the response is good then add abutton for it
+            // Ugh, I'm using the 'this' keyword. Not cool.
+            // refactor later
+            const btn = basic.addButton(testDatasetCount, testDatasetColor, testUrls)
 
-//      btn.setAttribute('id', )
+            //      btn.setAttribute('id', )
 
-      activeDatasetButtons.push(btn)
+            activeDatasetButtons.push(btn)
 
-      btn.addEventListener('click', function () {
-        basic.classToggle(btn, 'active')
-        const val = btn.getAttribute('value')
-        myMap.hasLayer(testDatasets[val])
-          ? myMap.removeLayer(testDatasets[val])
-          : myMap.addLayer(testDatasets[val])
-      })
+            btn.addEventListener('click', function () {
+                basic.classToggle(btn, 'active')
+                const val = btn.getAttribute('value')
+                myMap.hasLayer(testDatasets[val])
+                    ? myMap.removeLayer(testDatasets[val])
+                    : myMap.addLayer(testDatasets[val])
+            })
 
-      // modify data here
-      layerMod.addData(response.toGeoJSON())
+            // modify data here
+            layerMod.addData(response.toGeoJSON())
 
-      testDatasets[testDatasetCount] = layerMod
+            testDatasets[testDatasetCount] = layerMod
 
-      myMap.addLayer(layerMod).fitBounds(layerMod.getBounds())
-    }, function handleError (error) {
-      console.log(error)
-    })
+            myMap.addLayer(layerMod).fitBounds(layerMod.getBounds())
+        }, function handleError (error) {
+            console.log(error)
+        })
 }
 
 testUrlInput.addEventListener('keydown', function executeGetDataFromTestUrl(e) {
-  if (e.keyCode === 13) {
-    getDataFromTestUrl()
-  }
+    if (e.keyCode === 13) {
+        getDataFromTestUrl()
+    }
 })
 
 /*
-testUrlInput.addEventListener('blur', getDataFromTestUrl)
+  testUrlInput.addEventListener('blur', getDataFromTestUrl)
 */
 
 
@@ -482,16 +481,16 @@ testUrlInput.addEventListener('blur', getDataFromTestUrl)
 // and a function that toggles the button state
 
 toggleTestUrlsButton.addEventListener('click', () => {
-  Object.keys(testDatasets).forEach(x => {
-    // also need to make the buttons active and not active
-    // this is going to be hacky but it will work
-    const btn = document.getElementById(`newbutton${x}`)
-    basic.classToggle(btn, 'active')
+    Object.keys(testDatasets).forEach(x => {
+        // also need to make the buttons active and not active
+        // this is going to be hacky but it will work
+        const btn = document.getElementById(`newbutton${x}`)
+        basic.classToggle(btn, 'active')
 
-    myMap.hasLayer(testDatasets[x])
-      ? myMap.removeLayer(testDatasets[x])
-      : myMap.addLayer(testDatasets[x])
-  })
+        myMap.hasLayer(testDatasets[x])
+            ? myMap.removeLayer(testDatasets[x])
+            : myMap.addLayer(testDatasets[x])
+    })
 })
 
 // /////////////////////////////////////////////////////////////////////////
@@ -516,19 +515,19 @@ const getDataWithinPolygonButton = basic.addButton('Get data within polygon', 'b
 getDataWithinPolygonButton.setAttribute('class', 'btn btn-default')
 
 function showWithinPolygonContainerFunc () {
-  basic.classToggle(showWithinPolygonContainerButton, 'active')
+    basic.classToggle(showWithinPolygonContainerButton, 'active')
 
-  if (editMap.getSelectedPlacePolygon(selectedPlace) !== 'not a polygon') {
-    withinPolygonContainer.innerHTML = '' // why doesn't this clear everything in the container?
-    withinPolygonContainer.appendChild(getDataWithinPolygonButton)
-  } else {
-    withinPolygonContainer.innerHTML = '<h4>You need a polygon first, get one with the' +
-    ' place selector or draw one.</h4>'
-  }
+    if (editMap.getSelectedPlacePolygon(selectedPlace) !== 'not a polygon') {
+        withinPolygonContainer.innerHTML = '' // why doesn't this clear everything in the container?
+        withinPolygonContainer.appendChild(getDataWithinPolygonButton)
+    } else {
+        withinPolygonContainer.innerHTML = '<h4>You need a polygon first, get one with the' +
+            ' place selector or draw one.</h4>'
+    }
 
-  withinPolygonContainer.style.display === 'none' || withinPolygonContainer.style.display === ''
-    ? withinPolygonContainer.style.display = 'block'
-    : withinPolygonContainer.style.display = 'none'
+    withinPolygonContainer.style.display === 'none' || withinPolygonContainer.style.display === ''
+        ? withinPolygonContainer.style.display = 'block'
+        : withinPolygonContainer.style.display = 'none'
 }
 
 
@@ -539,39 +538,39 @@ function showWithinPolygonContainerFunc () {
 const toggleMarkerClustersButton = document.getElementById('toggle_marker_clusters')
 
 const pctoggler = function (map, obj1, obj2) {
-  Object.keys(obj1).forEach(key => {
-    if (map.hasLayer(obj1[key])) {
-      map.removeLayer(obj1[key])
-      map.addLayer(obj2[key])
-    }
-  })
+    Object.keys(obj1).forEach(key => {
+        if (map.hasLayer(obj1[key])) {
+            map.removeLayer(obj1[key])
+            map.addLayer(obj2[key])
+        }
+    })
 }
 
 const toggleMarkerClusters = function (map, layers, clusters) {
-  // If the layer cluster state is 0, which means layers and not clusters, then the
-  // function will
-  if (layerClusterState === 0) {
-    pctoggler(map, layers, clusters)
-    layerClusterState++
-  } else {
-    pctoggler(map, clusters, layers)
-    layerClusterState--
-  }
+    // If the layer cluster state is 0, which means layers and not clusters, then the
+    // function will
+    if (layerClusterState === 0) {
+        pctoggler(map, layers, clusters)
+        layerClusterState++
+    } else {
+        pctoggler(map, clusters, layers)
+        layerClusterState--
+    }
 }
 
 toggleMarkerClustersButton.addEventListener('click', function clusterToLayer () {
-  toggleMarkerClusters(myMap, datasets, datasetClusters)
+    toggleMarkerClusters(myMap, datasets, datasetClusters)
 })
 
 
 function saveFile (layer, fileNameInput) {
-  const filename = fileNameInput.value
-  const data = JSON.stringify(layer.toGeoJSON())
-  const blob = new Blob([data], {type: 'text/plain; charset=utf-8'})
+    const filename = fileNameInput.value
+    const data = JSON.stringify(layer.toGeoJSON())
+    const blob = new Blob([data], {type: 'text/plain; charset=utf-8'})
 
-  // this doesn't seem to work with markerClusters
-  //console.log(data)
-  filesaver.saveAs(blob, filename + '.geojson')
+    // this doesn't seem to work with markerClusters
+    //console.log(data)
+    filesaver.saveAs(blob, filename + '.geojson')
 }
 
 // how do I get every active layer points on the map?
@@ -579,16 +578,16 @@ function saveFile (layer, fileNameInput) {
 // here I have to call the convert clusters to layers function
 
 const activePointsLayersToFeatureCollection = function (map) {
-  const arr = []
-  map.eachLayer(mapLayer => {
-    if (mapLayer.feature) {
-      const lt = mapLayer.feature.geometry.type
-      if (lt === "Point" || lt === "MultiPoint") {
-        arr.push(mapLayer.toGeoJSON())
-      }
-    }
-  })
-  return featureCollection(arr)
+    const arr = []
+    map.eachLayer(mapLayer => {
+        if (mapLayer.feature) {
+            const lt = mapLayer.feature.geometry.type
+            if (lt === "Point" || lt === "MultiPoint") {
+                arr.push(mapLayer.toGeoJSON())
+            }
+        }
+    })
+    return featureCollection(arr)
 }
 
 // this is probably where I need to get the data
@@ -596,49 +595,49 @@ const activePointsLayersToFeatureCollection = function (map) {
 // this isn't the prettiest function, but it can be refactored layer. It works
 // Now I need to figure out how to turn the new dataset on and off
 const getDataWithinPolygonFunc = function (map, poly) {
-  let data        
-  if (layerClusterState === 0) {
-    data = within(activePointsLayersToFeatureCollection(map), poly)
-  } else {
-    toggleMarkerClusters(myMap, datasets, datasetClusters)
-    data = within(activePointsLayersToFeatureCollection(map), poly)
-    toggleMarkerClusters(myMap, datasets, datasetClusters)
-  }
-  return data
+    let data        
+    if (layerClusterState === 0) {
+        data = within(activePointsLayersToFeatureCollection(map), poly)
+    } else {
+        toggleMarkerClusters(myMap, datasets, datasetClusters)
+        data = within(activePointsLayersToFeatureCollection(map), poly)
+        toggleMarkerClusters(myMap, datasets, datasetClusters)
+    }
+    return data
 }
 
 showWithinPolygonContainerButton.addEventListener('click', showWithinPolygonContainerFunc)
 
 // now to get this working
 getDataWithinPolygonButton.addEventListener('click', () => {
-  // This is pretty ugly, but right now it works, it will be
-  // refactored
-  const pointsWithinLayer = L.geoJSON(
-    getDataWithinPolygonFunc(myMap, editMap.getSelectedPlacePolygon(selectedPlace))                
-  ).addTo(myMap)
+    // This is pretty ugly, but right now it works, it will be
+    // refactored
+    const pointsWithinLayer = L.geoJSON(
+        getDataWithinPolygonFunc(myMap, editMap.getSelectedPlacePolygon(selectedPlace))                
+    ).addTo(myMap)
 
-  if (document.getElementById('file_name_input')) {
-    const fni = document.getElementById('file_name_input')
-    const fsb = document.getElementById('file_save_button')
-    fni.parentNode.removeChild(fni)
-    fsb.parentNode.removeChild(fsb)
-  }
+    if (document.getElementById('file_name_input')) {
+        const fni = document.getElementById('file_name_input')
+        const fsb = document.getElementById('file_save_button')
+        fni.parentNode.removeChild(fni)
+        fsb.parentNode.removeChild(fsb)
+    }
 
-  // How do I delete this input and save button and re create them on every button press
-  // make file name input
-  const fileNameInput = document.createElement('input')
-  fileNameInput.id = 'file_name_input'
-  fileNameInput.setAttribute('class', 'form-control')
-  fileNameInput.setAttribute('placeholder', 'Enter the file name here')
-  fileNameInput.setAttribute('type', 'text')
-  withinPolygonContainer.appendChild(fileNameInput)
+    // How do I delete this input and save button and re create them on every button press
+    // make file name input
+    const fileNameInput = document.createElement('input')
+    fileNameInput.id = 'file_name_input'
+    fileNameInput.setAttribute('class', 'form-control')
+    fileNameInput.setAttribute('placeholder', 'Enter the file name here')
+    fileNameInput.setAttribute('type', 'text')
+    withinPolygonContainer.appendChild(fileNameInput)
 
-  // Instead of having a save button, I should just have the html in the template
-  // make save button
-  const saveButton = basic.addButton('Save to geojson file', 'black', withinPolygonContainer)
-  saveButton.id = 'file_save_button'
-  saveButton.classList.remove('active')
-  saveButton.addEventListener('click', () => saveFile(pointsWithinLayer, fileNameInput))
+    // Instead of having a save button, I should just have the html in the template
+    // make save button
+    const saveButton = basic.addButton('Save to geojson file', 'black', withinPolygonContainer)
+    saveButton.id = 'file_save_button'
+    saveButton.classList.remove('active')
+    saveButton.addEventListener('click', () => saveFile(pointsWithinLayer, fileNameInput))
 
 })
 
@@ -671,13 +670,13 @@ getDataWithinPolygonButton.addEventListener('click', () => {
 //
 
 /*
-const clearLayers = function (map) {
+  const clearLayers = function (map) {
   map.eachLayer(mapLayer => {
-    if (mapLayer.feature) {
-      map.removeLayer(mapLayer) 
-    }
+  if (mapLayer.feature) {
+  map.removeLayer(mapLayer) 
+  }
   })
-}
+  }
 */
 
 
@@ -688,17 +687,17 @@ const clearLayers = function (map) {
 // markerCluster layers
 // of course I could just call the toggleMarkerClusters function...
 const clearLayers = function (map, arr) {
-  map.eachLayer(mapLayer => {
-    const arrayLayer = arr.map(aL => map.hasLayer(aL) ? aL : undefined)
-      .filter(x => {
-        if (x !== undefined) {
-          return x
+    map.eachLayer(mapLayer => {
+        const arrayLayer = arr.map(aL => map.hasLayer(aL) ? aL : undefined)
+              .filter(x => {
+                  if (x !== undefined) {
+                      return x
+                  }
+              })
+        if (mapLayer !== arrayLayer[0]) {
+            map.removeLayer(mapLayer)
         }
-      })
-    if (mapLayer !== arrayLayer[0]) {
-      map.removeLayer(mapLayer)
-    }
-  })
+    })
 }
 
 const clearMapButton = document.getElementById('clear_map')
@@ -706,13 +705,13 @@ const clearMapButton = document.getElementById('clear_map')
 const tileLayers = Object.keys(baseLayers).map(n => baseLayers[n])
 
 clearMapButton.addEventListener('click', function clearMap () {
-  // toggle 'active' class off
-  activeDatasetButtons.forEach(function deactivate (link) {
-    link.classList.remove('active')
-  })
+    // toggle 'active' class off
+    activeDatasetButtons.forEach(function deactivate (link) {
+        link.classList.remove('active')
+    })
 
-  // remove all layers from map, except the active tile layers
-  clearLayers(myMap, tileLayers)
+    // remove all layers from map, except the active tile layers
+    clearLayers(myMap, tileLayers)
 })
 
 
@@ -743,12 +742,12 @@ clearMapButton.addEventListener('click', function clearMap () {
 // there needs to be a function that gets marker layers and toggles them
 // to datasets, but doesn't get the non-marker layers
 const activeNonTileLayerKeys = function (map, obj) {
-  return Object.keys(obj)
-    .filter(key => {
-      if (map.hasLayer(obj[key])) {
-        return obj
-      }
-    })
+    return Object.keys(obj)
+        .filter(key => {
+            if (map.hasLayer(obj[key])) {
+                return obj
+            }
+        })
 }
 
 // get filter by container button stuff
@@ -759,23 +758,23 @@ const filterByContainer = document.getElementById('filter_by_container')
 
 showFilterByContainer.addEventListener('click', () => {
 
-  // filter description text
-  const descriptionText = `This section will contain a selector containing all of the
+    // filter description text
+    const descriptionText = `This section will contain a selector containing all of the
 unique field names (keys) for a dataset. It will also include a text input -or- another selector
 that will allow the field values to be searched. On the value search only the data points that
 match the search query will be displayed on the map.`
 
-  const descriptionTextNode = document.createTextNode(descriptionText)
+    const descriptionTextNode = document.createTextNode(descriptionText)
 
-  // make selector, that has all active datasets on it.
-  const filterBySelector = layerClusterState === 0 
-    ? filterize.makeSelector(activeNonTileLayerKeys(myMap, datasets))
-    : filterize.makeSelector(activeNonTileLayerKeys(myMap, datasetClusters))
+    // make selector, that has all active datasets on it.
+    const filterBySelector = layerClusterState === 0 
+          ? filterize.makeSelector(activeNonTileLayerKeys(myMap, datasets))
+          : filterize.makeSelector(activeNonTileLayerKeys(myMap, datasetClusters))
 
-  filterBySelector.setAttribute('id', 'filter_by_selector')
-  filterByContainer.appendChild(descriptionTextNode)
-  filterByContainer.appendChild(filterBySelector)
-//console.log(filterByContainer)
+    filterBySelector.setAttribute('id', 'filter_by_selector')
+    filterByContainer.appendChild(descriptionTextNode)
+    filterByContainer.appendChild(filterBySelector)
+    //console.log(filterByContainer)
 
 })
 
@@ -792,10 +791,10 @@ const filter_by_input = document.getElementById('filter_by_input')
 // non-points layers
 // listen to map
 myMap.on('layeradd', () => {
-  //toggleMarkerClusters(myMap, datasets, datasetClusters)
-//  var x = activeNonTileLayersOnMap(myMap, tileLayers)
-//  console.log(x.length)
-  //toggleMarkerClusters(myMap, datasets, datasetClusters)
+    //toggleMarkerClusters(myMap, datasets, datasetClusters)
+    //  var x = activeNonTileLayersOnMap(myMap, tileLayers)
+    //  console.log(x.length)
+    //toggleMarkerClusters(myMap, datasets, datasetClusters)
 })
 
 

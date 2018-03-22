@@ -3,7 +3,8 @@
 
 import { classToggle,
          classToggleOnDiffLink,
-         getExt
+         getExt,
+         addButton
        } from '../pieces/basic.js';
 
 describe('basic.js file tests', () => {
@@ -157,56 +158,33 @@ describe('basic.js file tests', () => {
             expect(getExt(caps_geojson)).toBe('geojson');
             expect(getExt(lower_geojson)).toBe('geojson');
             expect(getExt(mixed_geojson)).toBe('geojson');
+        });
+    });
 
+    // should I get rid of this function?
+    describe('addButton function', () => {
+        test('addButton adds button to element', () => {
+            const fixture = document.createElement('div');
+            const btn = addButton('hey now now', 'blue', fixture);
+            expect(btn).toBe(fixture.childNodes[0]);
         });
 
+        test('addButton should have specific text', () => {
+            const fixture = document.createElement('div');
+            const btn = addButton('hey now now', 'blue', fixture);
+            expect(fixture.childNodes[0].value).toBe('hey now now');
+        });
+
+        test('addButton should have specific text color', () => {
+            const fixture = document.createElement('div');
+            const btn = addButton('hey now now', 'blue', fixture);
+            expect(fixture.childNodes[0].style.color).toBe('blue');
+        });
+
+        test('addButton should have specific font weight', () => {
+            const fixture = document.createElement('div');
+            const btn = addButton('hey now now', 'blue', fixture);
+            expect(fixture.childNodes[0].style.fontWeight).toBe('bold');
+        });
     });
 });
-
-/*
-describe('basic.js file', function () {
-    describe('getExt', function () {
-
-        it('should return "geojson" from a string ending with "json" (case-insensitive)', function () {
-            const str = 'nachos.JsOn'
-            assert.equal(basic.getExt(str), 'geojson')
-        })
-
-        it('should return "geojson" from string ending with anything other than above cases', function () {
-            const str = 'nachos'
-            assert.equal(basic.getExt(str), 'geojson')
-        })
-    })
-
-    describe('addButton', function () {
-        afterEach(function () {
-            const fixture = document.getElementById('fixture')
-            fixture.innerHTML = ''
-        })
-
-        it('should add a button to an element', function () {
-            const fixture = document.getElementById('fixture')
-            const btn = basic.addButton('hey now now', 'blue', fixture)
-            assert.equal(btn, fixture.childNodes[0])
-        })
-
-        it('the button should have specific text', function () {
-            const fixture = document.getElementById('fixture')
-            const btn = basic.addButton('hey now now', 'blue', fixture)
-            assert.equal('hey now now', fixture.childNodes[0].value)
-        })
-
-        it('the button should have specific text color', function () {
-            const fixture = document.getElementById('fixture')
-            const btn = basic.addButton('hey now now', 'blue', fixture)
-            assert.equal('blue', fixture.childNodes[0].style.color)
-        })
-
-        it('the button should have specific font weight', function () {
-            const fixture = document.getElementById('fixture')
-            const btn = basic.addButton('hey now now', 'blue', fixture)
-            assert.equal('bold', fixture.childNodes[0].style.fontWeight)
-        })
-    })
-})
-*/
