@@ -3,11 +3,13 @@
 console.log('spatialdatahub.org-static');
 
 const L = require('leaflet');
+// this needs to be fixed so that it is not en.en
+const en = require('easy-nominatim').en;
 
 const within = require('@turf/within');
 
 import { feature, featureCollection } from '@turf/helpers';
-import { getPlaceData, nominatim, normalizeGeoJSON, possiblePlaces } from 'easy-nominatim';
+//import { getPlaceData, nominatim, normalizeGeoJSON, possiblePlaces } from 'easy-nominatim';
 
 const markercluster = require('leaflet.markercluster');
 const filesaver = require('file-saver');
