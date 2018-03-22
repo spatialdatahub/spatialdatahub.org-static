@@ -59,7 +59,7 @@ describe('filterize.js', function () {
       )
     })
   })
-
+.
 
   describe('featurePropertiesInclude', function () {
 
