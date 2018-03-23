@@ -23,12 +23,13 @@ a:link, a:visited  {
     align-items: center;
 }
 
-.old-header {
-    display: none;  
+.content {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 }
 
 .main {
-    display: grid;  
 }
 
 .footer {
