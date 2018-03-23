@@ -1,1 +1,41 @@
+/* spatialdatahub.org-static/build/css/style-grid.css */
+/* It would be nice to have this stuff in the src file... maybe not */
 
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+a:link, a:visited  {
+    text-decoration: none;
+}
+
+.header a {
+    color: white;
+}
+
+.header {
+    background-color: #3f6cc1;
+    padding: 10px;
+
+    display: flex;  
+    justify-content: space-evenly;
+    flex-flow: wrap;
+    align-items: center;
+}
+
+.old-header {
+    display: none;  
+}
+
+.main {
+    display: grid;  
+}
+
+.footer {
+    margin: 10px;
+
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: wrap;
+    align-items: center;
+}
