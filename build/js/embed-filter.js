@@ -2,22 +2,31 @@
 'use strict';
 
 // here i have to make a filter function that relies on the url
+// this needs to be put into the main bundle.js so that it has access
+// to all the variables. these things need to be made into functions that
+// run only at specific times. How can I make that happen?
 
 // get map
+
 // get dataset
-// search url for ?f=STRING and use STRING to filter the dataset
 
 // get url filter string
-var urlParams = new URLSearchParams(window.location.search);
+// I don't like the way that I have to write this, but it works, which is the
+// most important thing.
+var getDatasetFilterParamValue = function getDatasetFilterParamValue() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var response = void 0;
+    urlParams.forEach(function (value, key) {
+        if (key === 'f') {
+            response = value;
+        }
+    });
+    return response;
+};
 
-//for (let p of urlParams.values()) { console.log(p) };
+console.log(getDatasetFilterParamValue());
 
-urlParams.forEach(function (value, key) {
-    if (key === 'f') {
-        console.log(value);
-        // do a bunch of cool stuff
-    }
-    //  console.log(`key: ${key}, value: ${value}`)  
-});
+// the key can be whatever... maybe name or something there should be a
+// default value that just shows all data.
 
 },{}]},{},[1]);

@@ -22,7 +22,6 @@ const editMap = require('./pieces/editMap.js');
 const filterize = require('./pieces/filterize.js');
 
 
-
 // Things I need to fix
 // - filesaver doesn't save data from all sources, only the test urls
 // - csv files (and possibly other non-geojson files) do not load on dataset detail page -- FIXED
