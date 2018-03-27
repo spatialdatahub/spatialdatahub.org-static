@@ -9,6 +9,7 @@
   "scripts": {
     "build": "browserify src/bundle.js -t babelify -o build/js/bundle.js -t",
     "dev": "watchify src/bundle.js -t babelify -o build/js/bundle.js -t",
+    "dev-filter": "watchify src/embed-filter.js -t babelify -o build/js/embed-filter.js -t",
     "test": "jest",
     "test-watch": "jest --verbose --watch"
   },
