@@ -164,7 +164,6 @@ let layerClusterState = 0; // 0 is layers, 1 is clusters. // something is wrong
 
 // const handleResponseCluster = function () {}
 
-
 datasetLinks.forEach(function handleDatasetLink (link) {
     const pk = link.id;
     const ext = link.getAttribute('value'); // I have to use this because 'value' is a loaded arguement
