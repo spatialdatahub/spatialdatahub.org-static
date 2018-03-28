@@ -3,13 +3,6 @@
 // to all the variables. these things need to be made into functions that
 // run only at specific times. How can I make that happen?
 
-// get map
-
-// get dataset
-
-// get url filter string
-// I don't like the way that I have to write this, but it works, which is the
-// most important thing.
 const getDatasetFilterParam = function() {
     const urlParams = new URLSearchParams(window.location.search);
     let response;
@@ -20,8 +13,6 @@ const getDatasetFilterParam = function() {
     });
     return response;
 };
-
-//console.log(getDatasetFilterParam());
 
 // the key can be whatever... maybe name or something there should be a
 // default value that just shows all data.

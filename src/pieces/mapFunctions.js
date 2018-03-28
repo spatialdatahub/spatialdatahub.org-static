@@ -52,21 +52,6 @@ const getTSV = function (url) {
     });
 };
 
-/*
-  const handlePromiseLayer = function (promise, map, layer, cluster, layerContainer, clusterContainer, key) {
-  promise
-  .then(res => layer.addDataset(res.toGeoJSON()))
-  .then(l => layerContainer[key] = l)
-  .then(l => {
-  map.addLayer(l).fitBounds(l.getBounds())
-  return l
-  })
-  .then(l => cluster.addLayer(l))
-  .then(c => clusterContainer[key] = c)
-  .catch(error => console.log(error))
-  }
-*/
-
 
 // 2) function to choose which omnivore function to run
 // should I write getCSV getKML and getGeoJSON as object
@@ -189,13 +174,36 @@ const returnCorrectUrl = function (link, pk) {
         : `/load_dataset/${pk}`;
 };
 
-const returnLayer = function (color, markerOptions) {
+const returnLayer = function (color, markerOptions, filter=null) {
     return L.geoJSON(null, {
         // set the points to little circles
         pointToLayer: (feature, latlng) => {
             return L.circleMarker(latlng, markerOptions);
         },
+        filter: (geoJsonFeature) => {
+            /*
+            return filter !== null ?
+                Object.keys(geoJsonFeature.properties)
+                .map(key => geoJsonFeature.properties[key]
+                     .toString()
+                     .includes(filter)
+                    ).map(x => x)
+                // return the geoJsonFeatures
+            // this is not returning the geoJsonFeature, but it is console.loggin it
+//                .map(x => console.log(geoJsonFeature)) // I am having a problem here. 
+//                : geoJsonFeature;
+                //.map(x => false) // I am having a problem here. 
+                : true;
+                */
+            return filter !== null
+                ? false
+                : true;
+
+        },
         onEachFeature: (feature, layer) => {
+
+
+
             // make sure the fill is the color
             layer.options.fillColor = color;
             // and make sure the perimiter is black (if it's a point) and the color otherwise
