@@ -174,6 +174,10 @@ const returnCorrectUrl = function (link, pk) {
         : `/load_dataset/${pk}`;
 };
 
+const checkIfFeatureHasString = f => {
+    
+};
+
 const returnLayer = function (color, markerOptions, filter=null) {
     return L.geoJSON(null, {
         // set the points to little circles
@@ -181,24 +185,29 @@ const returnLayer = function (color, markerOptions, filter=null) {
             return L.circleMarker(latlng, markerOptions);
         },
         filter: (geoJsonFeature) => {
-            /*
-            return filter !== null ?
-                Object.keys(geoJsonFeature.properties)
-                .map(key => geoJsonFeature.properties[key]
-                     .toString()
-                     .includes(filter)
-                    ).map(x => x)
-                // return the geoJsonFeatures
-            // this is not returning the geoJsonFeature, but it is console.loggin it
-//                .map(x => console.log(geoJsonFeature)) // I am having a problem here. 
-//                : geoJsonFeature;
-                //.map(x => false) // I am having a problem here. 
-                : true;
-                */
-            return filter !== null
-                ? false
-                : true;
-
+	    // this takes a ton of time.
+	    // it is unrealistic
+//            return filter !== null
+//                ? Object.keys(geoJsonFeature.properties)
+//		.map(key => geoJsonFeature.properties[key]
+//					.toString()
+//					.toLowerCase()
+//		     .includes(filter))
+//		.map(x => x)
+//                : true;
+	    let answer;
+	    if (filter !== null) {
+		answer = Object.keys(geoJsonFeature.properties)
+		.map(key => geoJsonFeature.properties[key]
+					.toString()
+					.toLowerCase()
+		    .includes(filter))
+		    .map(x => x);
+	    } else {
+		answer = true;
+	    }
+	    // this is returning arrays with of true and false values.
+	    console.log(answer);
         },
         onEachFeature: (feature, layer) => {
 
