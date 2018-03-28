@@ -189,7 +189,7 @@ const returnCorrectUrl = function (link, pk) {
         : `/load_dataset/${pk}`;
 };
 
-const returnLayer = function (color, popupCallback, markerOptions) {
+const returnLayer = function (color, markerOptions) {
     return L.geoJSON(null, {
         // set the points to little circles
         pointToLayer: (feature, latlng) => {
@@ -203,8 +203,8 @@ const returnLayer = function (color, popupCallback, markerOptions) {
                 ? layer.options.color = 'black'
                 : layer.options.color = color;
             // add those popups
-            popupCallback(feature, layer);
-            // mapFunctions.addPopups(feature, layer) // this comes from the index_maps.js file
+            //popupCallback(feature, layer);
+            addPopups(feature, layer); // this comes from the index_maps.js file
         }
     });
 };

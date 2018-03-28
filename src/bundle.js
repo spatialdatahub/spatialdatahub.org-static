@@ -16,6 +16,7 @@ const filesaver = require('file-saver');
 
 const basic = require('./pieces/basic.js'); // tested
 const mapFunctions = require('./pieces/mapFunctions.js');
+import { addPopups } from './pieces/mapFunctions.js';
 //const datasetList = require('./pieces/datasetList.js')
 const editMap = require('./pieces/editMap.js');
 
@@ -174,7 +175,7 @@ datasetLinks.forEach(function handleDatasetLink (link) {
     linkDatasetColorCounter++;
     const color = colors[linkDatasetColorCounter % colors.length];
     // a new layer needs to be created for every link
-    const layerMod = mapFunctions.returnLayer(color, mapFunctions.addPopups, markerOptions);
+    const layerMod = mapFunctions.returnLayer(color, markerOptions);
     // a new cluster layer needs to be created for every link
     const layerCluster = mapFunctions.returnCluster(color);
 
@@ -437,7 +438,7 @@ function getDataFromTestUrl () {
                         ? layer.options.color = 'white'
                         : layer.options.color = testDatasetColor;
                     // add those popups
-                    mapFunctions.addPopups(feature, layer); // this comes from the index_maps.js file
+                    addPopups(feature, layer); // this comes from the index_maps.js file
                 }
             });
 
