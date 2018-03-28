@@ -10,7 +10,7 @@
 // get url filter string
 // I don't like the way that I have to write this, but it works, which is the
 // most important thing.
-const getDatasetFilterParamValue = function() {
+const getDatasetFilterParam = function() {
     const urlParams = new URLSearchParams(window.location.search);
     let response;
     urlParams.forEach((value, key) => {
@@ -21,8 +21,11 @@ const getDatasetFilterParamValue = function() {
     return response;
 };
 
-console.log(getDatasetFilterParamValue());
+//console.log(getDatasetFilterParam());
 
 // the key can be whatever... maybe name or something there should be a
 // default value that just shows all data.
 
+module.exports = {
+  getDatasetFilterParam: getDatasetFilterParam
+};
