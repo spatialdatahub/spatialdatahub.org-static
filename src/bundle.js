@@ -22,7 +22,7 @@ const editMap = require('./pieces/editMap.js');
 
 const filterize = require('./pieces/filterize.js');
 
-import { getDatasetFilterParam } from './pieces/embed-filter.js';
+import { getDatasetFilterParams } from './pieces/embed-filter.js';
 
 
 // Things I need to fix
@@ -139,7 +139,8 @@ esriWorldImagery.on('tileload', function (tileEvent) {
 
 
 // dataset filter parameter
-const datasetFilterParameter = getDatasetFilterParam();
+const datasetFilterParameters = getDatasetFilterParams();
+console.log(datasetFilterParameters);
 
 
 // colors
@@ -178,7 +179,7 @@ datasetLinks.forEach(function handleDatasetLink (link) {
     linkDatasetColorCounter++;
     const color = colors[linkDatasetColorCounter % colors.length];
     // a new layer needs to be created for every link
-    const layerMod = mapFunctions.returnLayer(color, markerOptions, datasetFilterParameter);
+    const layerMod = mapFunctions.returnLayer(color, markerOptions, datasetFilterParameters);
     // a new cluster layer needs to be created for every link
     const layerCluster = mapFunctions.returnCluster(color);
 

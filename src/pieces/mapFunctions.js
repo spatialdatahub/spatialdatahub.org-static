@@ -174,9 +174,6 @@ const returnCorrectUrl = function (link, pk) {
         : `/load_dataset/${pk}`;
 };
 
-const checkIfFeatureHasString = f => {
-    
-};
 
 const returnLayer = function (color, markerOptions, filter=null) {
     return L.geoJSON(null, {
@@ -185,34 +182,25 @@ const returnLayer = function (color, markerOptions, filter=null) {
             return L.circleMarker(latlng, markerOptions);
         },
         filter: (geoJsonFeature) => {
-	    // this takes a ton of time.
-	    // it is unrealistic
-//            return filter !== null
-//                ? Object.keys(geoJsonFeature.properties)
-//		.map(key => geoJsonFeature.properties[key]
-//					.toString()
-//					.toLowerCase()
-//		     .includes(filter))
-//		.map(x => x)
-//                : true;
+	    // search one field at a time.
+	    // what if the field key has uppercase letters or other things?
+	    // put quotes around it
+	    // how can I search the field?
 	    let answer;
 	    if (filter !== null) {
-		answer = Object.keys(geoJsonFeature.properties)
-		.map(key => geoJsonFeature.properties[key]
-					.toString()
-					.toLowerCase()
-		    .includes(filter))
-		    .map(x => x);
+		// remove quotes around string (if they are there)
+		const k = filter.key.replace(/['"]+/g, '');
+		const v = filter.value.replace(/['"]+/g, '');
+		answer = geoJsonFeature.properties[k]
+		    .toLowerCase()
+		    .includes(v.toLowerCase());
 	    } else {
 		answer = true;
 	    }
 	    // this is returning arrays with of true and false values.
-	    console.log(answer);
+	    return answer;
         },
         onEachFeature: (feature, layer) => {
-
-
-
             // make sure the fill is the color
             layer.options.fillColor = color;
             // and make sure the perimiter is black (if it's a point) and the color otherwise

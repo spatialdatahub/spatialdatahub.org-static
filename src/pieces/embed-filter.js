@@ -3,12 +3,13 @@
 // to all the variables. these things need to be made into functions that
 // run only at specific times. How can I make that happen?
 
-const getDatasetFilterParam = function() {
+const getDatasetFilterParams = function() {
     const urlParams = new URLSearchParams(window.location.search);
     let response;
     urlParams.forEach((value, key) => {
-        if (key === 'f') {
-            response = value;
+	// I use q in the python form stuff.
+        if (key !== 'q') {
+            response = {value: value, key: key};
         }
     });
     return response;
@@ -18,5 +19,5 @@ const getDatasetFilterParam = function() {
 // default value that just shows all data.
 
 module.exports = {
-  getDatasetFilterParam: getDatasetFilterParam
+  getDatasetFilterParams: getDatasetFilterParams
 };
