@@ -93,7 +93,6 @@ const latLngPointOnFeature = function (feature) {
 };
 
 const addPopups = function (feature, layer) {
-    
     const popupContent = checkFeatureProperties(feature)
           .concat(latLngPointOnFeature(feature))
           .map(x => x);
@@ -173,7 +172,6 @@ const returnCorrectUrl = function (link, pk) {
         ? link.getAttribute('url')
         : `/load_dataset/${pk}`;
 };
-
 
 const returnLayer = function (color, markerOptions, filter=null) {
     return L.geoJSON(null, {

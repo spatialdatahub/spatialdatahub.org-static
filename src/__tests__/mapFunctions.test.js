@@ -1,9 +1,9 @@
-// test/mapFunctions.test.js
+// __tests__/mapFunctions.test.js
 // this file does not test all the functions in the mapFunctions.js file
 // asynchronous testing needs to be used for many of the functions
 'use strict';
 
-import { latLngPointOnFeature, checkFeatureProperties } from '../pieces/mapFunctions';
+import { latLngPointOnFeature, checkFeatureProperties, returnCorrectUrl } from '../pieces/mapFunctions';
 
 // these should be imported from a separate file. maybe from the mocks section?
 const poly = {
@@ -142,6 +142,21 @@ describe('mapFunctions.js file tests', () => {
                 });
             });
 
+        });
+    });
+
+    describe('returnCorrectUrl', () => {
+        test('should take a link and return a url if there is a "url" attribute', () => {
+            const fixture = document.createElement('div');
+            const link = document.createElement('a');
+            link.setAttribute('url', 'https://whatever.com');
+            expect(returnCorrectUrl(link, 1)).toBe('https://whatever.com');
+        });
+
+        test('should return "/load_dataset/1" if given link without a url attribute but a pk of 1', () => {
+            const fixture = document.createElement('div');
+            const link = document.createElement('a');
+            expect(returnCorrectUrl(link, 1)).toBe('/load_dataset/1');
         });
     });
 });
