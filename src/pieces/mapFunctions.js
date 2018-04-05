@@ -56,7 +56,7 @@ const getTSV = function (url) {
 // 2) function to choose which omnivore function to run
 // should I write getCSV getKML and getGeoJSON as object
 // methods and call them?
-const extSelect = function (ext, url, handlePromise) {
+const extSelect = function (ext, url) {
     console.log(ext);
     const prom = ext === 'kml'
           ? getKML(url)

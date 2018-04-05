@@ -3,7 +3,7 @@
 // asynchronous testing needs to be used for many of the functions
 'use strict';
 
-import { latLngPointOnFeature, checkFeatureProperties, returnCorrectUrl } from '../pieces/mapFunctions';
+import { extSelect, latLngPointOnFeature, checkFeatureProperties, returnCorrectUrl } from '../pieces/mapFunctions';
 
 // these should be imported from a separate file. maybe from the mocks section?
 const poly = {
@@ -82,6 +82,12 @@ const point = {
 };
 
 describe('mapFunctions.js file tests', () => {
+    describe('extSelect function', () => {
+        describe('should return correct "getDataset" function when given an extension and url', () =>{
+            
+        });
+    });
+
     describe('latLngPointOnFeature function', () => {
         describe('should return html with the lat and lng coordinates', () => {
             test('should return <dt>Latitude:</dt> <dd>38</dd> for point feature latitude coordinate', () => {
