@@ -173,31 +173,38 @@ const returnCorrectUrl = function (link, pk) {
         : `/load_dataset/${pk}`;
 };
 
+const filterLayer = function (geoJsonFeature, filterParams) {
+    // search one field at a time.
+    // what if the field key has uppercase letters or other things?
+    // put quotes around it
+    // how can I search the field?
+    // how do I add an or/and statement?
+    let answer;
+    if (filterParams !== null) {
+        // if filter is not null then it is an array
+        // if any item in the array fits the criteria
+        // return true, not an array
+        answer = filterParams.map(f => {
+  	    // remove quotes around string (if they are there)
+	    const k = f.key.replace(/['"]+/g, '');
+	    const v = f.value.replace(/['"]+/g, '');
+	    return geoJsonFeature.properties[k]
+	        .toLowerCase()
+	        .includes(v.toLowerCase());
+        }).includes(true);
+    } else {
+	answer = true;
+    }
+    return answer;
+};
+
 const returnLayer = function (color, markerOptions, filter=null) {
     return L.geoJSON(null, {
         // set the points to little circles
         pointToLayer: (feature, latlng) => {
             return L.circleMarker(latlng, markerOptions);
         },
-        filter: (geoJsonFeature) => {
-	    // search one field at a time.
-	    // what if the field key has uppercase letters or other things?
-	    // put quotes around it
-	    // how can I search the field?
-	    let answer;
-	    if (filter !== null) {
-		// remove quotes around string (if they are there)
-		const k = filter.key.replace(/['"]+/g, '');
-		const v = filter.value.replace(/['"]+/g, '');
-		answer = geoJsonFeature.properties[k]
-		    .toLowerCase()
-		    .includes(v.toLowerCase());
-	    } else {
-		answer = true;
-	    }
-	    // this is returning arrays with of true and false values.
-	    return answer;
-        },
+        filter: geoJsonFeature => filterLayer(geoJsonFeature, filter),
         onEachFeature: (feature, layer) => {
             // make sure the fill is the color
             layer.options.fillColor = color;

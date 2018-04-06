@@ -5,11 +5,11 @@
 
 const getDatasetFilterParams = function() {
     const urlParams = new URLSearchParams(window.location.search);
-    let response;
+    let response = [];
     urlParams.forEach((value, key) => {
-	// I use q in the python form stuff.
+	// q is used in the python form stuff, so it cannot be used here.
         if (key !== 'q') {
-            response = {value: value, key: key};
+            response.push({value: value, key: key});
         }
     });
     return response;

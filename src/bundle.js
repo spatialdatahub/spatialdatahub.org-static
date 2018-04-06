@@ -140,8 +140,7 @@ esriWorldImagery.on('tileload', function (tileEvent) {
 
 // dataset filter parameter
 const datasetFilterParameters = getDatasetFilterParams();
-console.log(datasetFilterParameters);
-
+//console.log(datasetFilterParameters);
 
 // colors
 const colors = ['purple', 'blue', 'green', 'yellow', 'orange', 'red'];
