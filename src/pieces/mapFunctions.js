@@ -179,9 +179,10 @@ const filterLayer = function (geoJsonFeature, filterParams) {
     // put quotes around it
     // how can I search the field?
     // how do I add an or/and statement?
-    console.log(filterParams);
+//    console.log(filterParams);
     let answer;
-    if (filterParams !== null) {
+    //if (filterParams !== null) {
+    if (filterParams !== 'undefined' && filterParams.length > 0) {
         // if filter is not null then it is an array
         // if any item in the array fits the criteria
         // return true, not an array
