@@ -22,7 +22,7 @@ const getGeoJSON = function (url) {
               .on('ready', () => resolve(dataLayer))
               .on('error', () => reject(Error('Either a url problem or the file cannot be parsed')));
     });
-}
+};
 
 const getKML = function (url) {
     return new Promise(function handlePromise (resolve, reject) {
@@ -179,6 +179,7 @@ const filterLayer = function (geoJsonFeature, filterParams) {
     // put quotes around it
     // how can I search the field?
     // how do I add an or/and statement?
+    console.log(filterParams);
     let answer;
     if (filterParams !== null) {
         // if filter is not null then it is an array

@@ -139,6 +139,7 @@ esriWorldImagery.on('tileload', function (tileEvent) {
 
 
 // dataset filter parameter
+// this only happens once per page so it can be a const
 const datasetFilterParameters = getDatasetFilterParams();
 //console.log(datasetFilterParameters);
 
