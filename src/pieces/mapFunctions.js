@@ -1,6 +1,7 @@
 const L = require('leaflet');
 
-import { geojson, kml, csv } from '@mapbox/leaflet-omnivore';
+//import { geojson, kml, csv } from '@mapbox/leaflet-omnivore';
+const omnivore = require('@mapbox/leaflet-omnivore');
 
 // /////////// //
 // mapFunctions.js //
@@ -20,7 +21,7 @@ import { geojson, kml, csv } from '@mapbox/leaflet-omnivore';
 
 const getGeoJSON = function (url) {
     return new Promise(function handlePromise (resolve, reject) {
-        const dataLayer = geojson(url)
+        const dataLayer = omnivore.geojson(url)
               .on('ready', () => resolve(dataLayer))
               .on('error', () => reject(Error('Either a url problem or the file cannot be parsed')));
     });
@@ -28,7 +29,7 @@ const getGeoJSON = function (url) {
 
 const getKML = function (url) {
     return new Promise(function handlePromise (resolve, reject) {
-        const dataLayer = kml(url)
+        const dataLayer = omnivore.kml(url)
               .on('ready', () => resolve(dataLayer))
               .on('error', () => reject(Error('Either a url problem or the file cannot be parsed')));
     });
@@ -36,7 +37,7 @@ const getKML = function (url) {
 
 const getCSV = function (url) {
     return new Promise(function handlePromise (resolve, reject) {
-        const dataLayer = csv(url, {
+        const dataLayer = omnivore.csv(url, {
             delimiter: ','
         })
               .on('ready', () => resolve(dataLayer))
@@ -46,7 +47,7 @@ const getCSV = function (url) {
 
 const getTSV = function (url) {
     return new Promise(function handlePromise (resolve, reject) {
-        const dataLayer = csv(url, {
+        const dataLayer = omnivore.csv(url, {
             delimiter: '\t'
         })
               .on('ready', () => resolve(dataLayer))

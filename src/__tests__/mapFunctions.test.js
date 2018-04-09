@@ -87,12 +87,12 @@ const point = {
 };
 
 describe('mapFunctions.js file tests', () => {
-    describe('getGeoJSON function', () => {
-        test('should return promise with dataLayer', () => {
-            const testUrl = 'https://raw.githubusercontent.com/spatialdatahub/GeoJsonData/master/IndioCa.json';
-            expect(getGeoJSON(testUrl)).toEqual({});
-        });
-    });
+//    describe('getGeoJSON function', () => {
+//        test('should return promise with dataLayer', () => {
+//            const testUrl = 'https://raw.githubusercontent.com/spatialdatahub/GeoJsonData/master/IndioCa.json';
+//            expect(getGeoJSON(testUrl)).toEqual({});
+//        });
+//    });
 
 
 
