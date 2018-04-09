@@ -20,8 +20,6 @@ import { addPopups } from './pieces/mapFunctions.js';
 //const datasetList = require('./pieces/datasetList.js')
 const editMap = require('./pieces/editMap.js');
 
-const filterize = require('./pieces/filterize.js');
-
 import { getDatasetFilterParams } from './pieces/embed-filter.js';
 
 
@@ -722,99 +720,3 @@ clearMapButton.addEventListener('click', function clearMap () {
     // remove all layers from map, except the active tile layers
     clearLayers(myMap, tileLayers);
 });
-
-
-// /////////////////////////////////////////////////////////////////////////
-// Filterize 
-// /////////////////////////////////////////////////////////////////////////
-// make a button, that when pressed, reveals a selector with the datasets
-// as well as an input box
-
-// get all active datasets on map that are not tile layers
-
-// this must be called with the toggleMarkeClusters function
-// toggleMarkerClusters(myMap, datasets, datasetClusters)
-// this must be called with the toggleMarkeClusters function
-// first put all active datasets in array
-
-// this is difficult because it pulls from the map, and the map gives 
-// layers back, not necessarily single names
-// so how do I get the names from the datasets container and use them?
-
-// I probably have to compare those datasets with the active layers on
-// the map
-
-// this shouldn't be too bad. I'll just switch it up so that the array is
-// the datasets array, and so that it compares them .... and returns the
-// positives, instead of looking for negatives
-
-// there needs to be a function that gets marker layers and toggles them
-// to datasets, but doesn't get the non-marker layers
-const activeNonTileLayerKeys = function (map, obj) {
-    return Object.keys(obj)
-        .filter(key => {
-            if (map.hasLayer(obj[key])) {
-                return obj
-            }
-        })
-}
-
-// get filter by container button stuff
-// make container show up
-// there also needs to be a hide container function. There should be a toggle function somewhere
-const showFilterByContainer = document.getElementById('filter_by_container_button');
-const filterByContainer = document.getElementById('filter_by_container');
-
-showFilterByContainer.addEventListener('click', () => {
-
-    // filter description text
-    const descriptionText = `This section will contain a selector containing all of the
-unique field names (keys) for a dataset. It will also include a text input -or- another selector
-that will allow the field values to be searched. On the value search only the data points that
-match the search query will be displayed on the map.`;
-
-    const descriptionTextNode = document.createTextNode(descriptionText);
-
-    // make selector, that has all active datasets on it.
-    const filterBySelector = layerClusterState === 0 
-          ? filterize.makeSelector(activeNonTileLayerKeys(myMap, datasets))
-          : filterize.makeSelector(activeNonTileLayerKeys(myMap, datasetClusters));
-
-    filterBySelector.setAttribute('id', 'filter_by_selector');
-    filterByContainer.appendChild(descriptionTextNode);
-    filterByContainer.appendChild(filterBySelector);
-    //console.log(filterByContainer)
-
-});
-
-// get text input
-const filter_by_input = document.getElementById('filter_by_input');
-
-// get selected dataset on selector choice
-
-// on text input submit run the dataset filter function
-
-// update the filtered layer to show only filtered points or polygons or lines
-
-// I bet that marker cluster isn't working because it was being called on
-// non-points layers
-// listen to map
-myMap.on('layeradd', () => {
-    //toggleMarkerClusters(myMap, datasets, datasetClusters)
-    //  var x = activeNonTileLayersOnMap(myMap, tileLayers)
-    //  console.log(x.length)
-    //toggleMarkerClusters(myMap, datasets, datasetClusters)
-});
-
-
-// then populate selector with results from the array
-
-// use array to select the layer to search
-
-// get layer, convert to geojson, and search its properties for the term
-
-// filterize.featurePropertiesInclude(searchTerm, geojson)
-
-// remove selected layer from map, and add new filtered layer to map
-
-
