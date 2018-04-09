@@ -57,7 +57,6 @@ const getTSV = function (url) {
 // should I write getCSV getKML and getGeoJSON as object
 // methods and call them?
 const extSelect = function (ext, url) {
-    console.log(ext);
     const prom = ext === 'kml'
           ? getKML(url)
           : ext === 'csv'

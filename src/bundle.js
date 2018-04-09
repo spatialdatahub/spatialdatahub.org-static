@@ -20,7 +20,7 @@ import { addPopups } from './pieces/mapFunctions.js';
 //const datasetList = require('./pieces/datasetList.js')
 const editMap = require('./pieces/editMap.js');
 
-import { getDatasetFilterParams } from './pieces/embed-filter.js';
+import { getDatasetFilterParams } from './pieces/filterize.js';
 
 
 // Things I need to fix
@@ -138,7 +138,9 @@ esriWorldImagery.on('tileload', function (tileEvent) {
 
 // dataset filter parameter
 // this only happens once per page so it can be a const
-const datasetFilterParameters = getDatasetFilterParams();
+// window.location.search
+const datasetFilterParameters = getDatasetFilterParams(window.location.search);
+//console.log(window.location.search);
 //console.log(datasetFilterParameters);
 
 // colors

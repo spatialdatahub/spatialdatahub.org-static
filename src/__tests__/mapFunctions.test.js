@@ -1,9 +1,14 @@
-// __tests__/mapFunctions.test.js
+// spatialdatahub.org-static/src/__tests__/mapFunctions.test.js
 // this file does not test all the functions in the mapFunctions.js file
 // asynchronous testing needs to be used for many of the functions
 'use strict';
 
-import { extSelect, latLngPointOnFeature, checkFeatureProperties, returnCorrectUrl } from '../pieces/mapFunctions';
+import { extSelect,
+         getKML,
+         getGeoJSON,
+         latLngPointOnFeature,
+         checkFeatureProperties,
+         returnCorrectUrl } from '../pieces/mapFunctions';
 
 // these should be imported from a separate file. maybe from the mocks section?
 const poly = {
@@ -82,11 +87,31 @@ const point = {
 };
 
 describe('mapFunctions.js file tests', () => {
-    describe('extSelect function', () => {
-        describe('should return correct "getDataset" function when given an extension and url', () =>{
-            
+    describe('getGeoJSON function', () => {
+        test('should return promise with dataLayer', () => {
+            const testUrl = 'https://raw.githubusercontent.com/spatialdatahub/GeoJsonData/master/IndioCa.json';
+            expect(getGeoJSON(testUrl)).toEqual({});
         });
     });
+
+
+
+    /*
+    describe('extSelect function', () => {
+        describe('should return correct "getDataset" function when given an extension and url', () => {
+            test('extSelect returns getKML function with kml extension', () => {
+                const testUrl = 'https://whatever.com/test-dataset.kml';
+                expect(extSelect('kml', testUrl)).toEqual(getKML(testUrl));
+            });
+            test('extSelect returns getGeoJSON with test url and json extension', () => {
+                const testUrl = 'https://raw.githubusercontent.com/spatialdatahub/GeoJsonData/master/IndioCa.json';
+                console.log(getGeoJSON(testUrl));
+                console.log(extSelect('json',testUrl));
+                expect(extSelect('csv', testUrl)).toEqual(getGeoJSON(testUrl));
+            });
+        });
+    });
+    */
 
     describe('latLngPointOnFeature function', () => {
         describe('should return html with the lat and lng coordinates', () => {
