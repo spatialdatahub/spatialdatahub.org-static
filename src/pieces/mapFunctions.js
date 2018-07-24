@@ -111,7 +111,7 @@ L.Control.Watermark = L.Control.extend({
     onAdd: (map) => {
         const img = L.DomUtil.create('img');
         // this will have to be changed relative to the site for production
-        img.src = '/static/images/zmt_logo_blue_black_100px.png';
+        img.src = 'https://s3.eu-central-1.amazonaws.com/spatialdatahub-static/images/zmt_logo_blue_black_100px.png';
         // img.src = imgSrc
         img.style.width = '100px';
         return img;
