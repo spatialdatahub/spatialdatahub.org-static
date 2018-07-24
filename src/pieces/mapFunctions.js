@@ -127,7 +127,7 @@ L.Control.HomeButton = L.Control.extend({
         const container = L.DomUtil.create('div',
                                            'leaflet-bar leaflet-control leaflet-control-custom');
         //  container.innerHTML = '<i class="fa fa-home fa-2x" aria-hidden="true"></i>'
-        container.style.backgroundImage = 'url("/static/images/home_icon.png")';
+        container.style.backgroundImage = 'url("https://s3.eu-central-1.amazonaws.com/spatialdatahub-static/images/home_icon.png")';
         container.style.backgroundRepeat = 'no-repeat';
         container.style.backgroundColor = 'white';
         container.style.width = '34px';
@@ -146,7 +146,7 @@ L.Control.ToggleScrollButton = L.Control.extend({
         const container = L.DomUtil.create('div',
                                            'leaflet-bar leaflet-control leaflet-control-custom');
         // container.style.backgroundImage = 'url("http://localhost:8000/static/images/mouse.png")'
-        container.style.backgroundImage = 'url("/static/images/mouse.png")';
+        container.style.backgroundImage = 'url("https://s3.eu-central-1.amazonaws.com/spatialdatahub-static/images/mouse.png")';
         container.style.backgroundRepeat = 'no-repeat';
         container.style.backgroundColor = 'white';
         container.style.width = '34px';
