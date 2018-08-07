@@ -17,7 +17,7 @@ a:link, a:visited  {
     background-color: #3f6cc1;
     padding: 10px;
 
-    display: flex;  
+    display: flex;
     justify-content: space-evenly;
     flex-flow: wrap;
     align-items: center;
@@ -71,7 +71,12 @@ a:link, a:visited  {
 .btn {
   white-space: normal !important;
   max-width: 300px;
-} 
+}
+
+#dataset-scroll-list {
+  max-height: 800px;
+  overflow-y: scroll;
+}
 
 /* form css */
 
