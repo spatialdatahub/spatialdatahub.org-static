@@ -55,7 +55,6 @@ const getExt = function (string) {
 const addButton = function (text, color, container) {
     const btn = document.createElement('button');
     const value = document.createTextNode(text);
-    btn.setAttribute('class', 'btn btn-default active'); // this should be changed to not active, and the active thing should be added on the specific function
     btn.setAttribute('value', text);
     btn.setAttribute('id', `newbutton${btn.value}`);
 

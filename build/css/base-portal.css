@@ -8,9 +8,11 @@
   height: 41em;
 }
     
+/* need some media queries for this container*/
 #mapContainer {
   float: right;
 }
+
     
 #mapid {
   height: 50rem;
@@ -55,6 +57,7 @@
     display: grid;
     grid-template-columns: 2fr minmax(100px, 3fr);
     grid-template-rows: auto;
+    grid-column-gap: 20px;
     align-items: center;
     justify-items: stretch;
     grid-template-areas:
@@ -91,19 +94,37 @@
     text-align: center;
     grid-area: toggle;
 }
-.div7 {
-    background-color: #AA00FF;
-    text-align: center;
-    color: white;
-}
-.div8 {
-    background-color: #AAAAFF;
-    text-align: center;
-}
-
-
 
 /* end find place container */
+
+/* test url container stuff */
+.test-url-grid {
+    display: grid;
+    grid-template-columns: minmax(100px, 2fr) minmax(100px, 3fr);
+    grid-template-rows: auto;
+    grid-column-gap: 20px;
+    align-items: center;
+    justify-items: stretch;
+
+}
+
+.test-url-title {
+    font-weight: 500;
+    font-size: 24px;
+    text-align: start;
+}
+
+.test-url-input {
+    text-align: center;
+}
+
+.test-url-description {
+    overflow-wrap: break-word;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+
+/* end test url container stuff */
 
 /* map stuff */
 .custom-popup .leaflet-popup-content-wrapper {

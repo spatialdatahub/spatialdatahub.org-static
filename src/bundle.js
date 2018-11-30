@@ -523,7 +523,6 @@ const withinPolygonContainer = document.getElementById('within_polygon_container
 // Instead of making a button here makeit in the html, and display/hide it here
 // (2) make buttons that will get the data
 const getDataWithinPolygonButton = basic.addButton('Get data within polygon', 'black', withinPolygonContainer);
-getDataWithinPolygonButton.setAttribute('class', 'btn btn-default');
 
 function showWithinPolygonContainerFunc () {
     basic.classToggle(showWithinPolygonContainerButton, 'active');
