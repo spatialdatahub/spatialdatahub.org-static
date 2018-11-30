@@ -290,6 +290,8 @@ datasetLinks.forEach(function handleDatasetLink (link) {
 // /////////////////////////////////////////////////////////////////////////
 
 // (1) hide and show nominatim stuff (do this after I've gotten it working)
+// I have to control the show and hide with this because the nominatim section display
+// is set to grid. If it is switching between grid and none all the styling gets messed up
 const showFindPlaceContainerButton = document.getElementById('show_find_place_container_button');
 const findPlaceContainer = document.getElementById('find_place_container');
 

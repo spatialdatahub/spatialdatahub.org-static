@@ -29,4 +29,108 @@
   display: none;
 }
 
-/* how do i turn this thing into a grid? */
+/* extra function buttons */
+.extras-button-group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.extras-button {
+    background-color: #3f6cc1;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 5px;
+}
+
+.extras-button:hover {
+    background-color: #008dc9;
+}
+/* end extra function buttons */
+
+/* find place container nominatim */
+
+#nominatim {
+    display: grid;
+    grid-template-columns: 2fr minmax(100px, 3fr);
+    grid-template-rows: auto;
+    align-items: center;
+    justify-items: stretch;
+    grid-template-areas:
+      "title       placename"
+      "description selector"
+      "description addtomap"
+      "description toggle"
+}
+
+.nominatim-title {
+    font-weight: 500;
+    font-size: 24px;
+    text-align: start;
+    grid-area: title;
+}
+.nominatim-description {
+    text-align: start;
+    grid-area: description;
+}
+.nominatim-place-input {
+    text-align: center;
+    grid-area: placename;
+}
+.nominatim-place-selector {
+    text-align: center;
+    grid-area: selector;
+    text-overflow: ellipse;
+}
+.nominatim-place-selector-button {
+    text-align: center;
+    grid-area: addtomap;
+}
+.nominatim-place-toggle-button {
+    text-align: center;
+    grid-area: toggle;
+}
+.div7 {
+    background-color: #AA00FF;
+    text-align: center;
+    color: white;
+}
+.div8 {
+    background-color: #AAAAFF;
+    text-align: center;
+}
+
+
+
+/* end find place container */
+
+/* map stuff */
+.custom-popup .leaflet-popup-content-wrapper {
+  background:#2c3e50;
+  color:#fff;
+  font-size:16px;
+  line-height:24px;
+}
+
+.custom-popup .leaflet-popup-content-wrapper a {
+  color:rgba(255,255,255,0.5);
+}
+
+.custom-popup .leaflet-popup-content {
+  height:150px;
+  overflow:auto;
+}
+ 
+.custom-popup .leaflet-popup-tip-container {
+  width:30px;
+  height:20px;
+}
+
+.custom-popup .leaflet-popup-tip {
+  border-left:15px solid transparent;
+  border-right:15px solid transparent;
+  border-top:15px solid #2c3e50;
+}
+
+/* end map stuff */
