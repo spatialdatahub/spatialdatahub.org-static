@@ -10,15 +10,14 @@
     
 /* need some media queries for this container*/
 #mapContainer {
-  float: right;
+  /*float: right;*/
 }
 
-    
 #mapid {
   height: 50rem;
   margin-bottom: 10px;
 }
-    
+/*    
 #find_place_container {
   display: none;
 }
@@ -30,7 +29,7 @@
 #within_polygon_container {
   display: none;
 }
-
+*/
 /* extra function buttons */
 .extras-button-group {
     display: flex;
@@ -53,19 +52,6 @@
 
 /* find place container nominatim */
 
-#nominatim {
-    display: grid;
-    grid-template-columns: 2fr minmax(100px, 3fr);
-    grid-template-rows: auto;
-    grid-column-gap: 20px;
-    align-items: center;
-    justify-items: stretch;
-    grid-template-areas:
-      "title       placename"
-      "description selector"
-      "description addtomap"
-      "description toggle"
-}
 
 .nominatim-title {
     font-weight: 500;
@@ -95,18 +81,37 @@
     grid-area: toggle;
 }
 
-/* end find place container */
-
-/* test url container stuff */
-.test-url-grid {
+#nominatim {
     display: grid;
-    grid-template-columns: minmax(100px, 2fr) minmax(100px, 3fr);
+    /*grid-template-columns: 2fr minmax(100px, 3fr);*/
+    grid-template-columns: 2fr 3fr;
     grid-template-rows: auto;
     grid-column-gap: 20px;
     align-items: center;
     justify-items: stretch;
-
+    
+    grid-template-areas:
+      "title placename"
+      "description selector"
+      "description addtomap"
+      "description toggle";
 }
+
+@media screen and (max-width: 800px) {
+    #nominatim {
+        display: block;
+        /*
+        grid-template-columns: 1fr;
+        grid-template-rows: 100px 100px 100px;
+        align-items: center;
+        justify-items: stretch;
+        */
+    }
+}
+
+/* end find place container */
+
+/* test url container stuff */
 
 .test-url-title {
     font-weight: 500;
@@ -122,6 +127,21 @@
     overflow-wrap: break-word;
     word-break: break-all;
     word-wrap: break-word;
+}
+
+.test-url-grid {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    grid-template-rows: auto;
+    grid-column-gap: 20px;
+    align-items: center;
+    justify-items: stretch;
+}
+
+@media screen and (max-width: 800px) {
+    .test-url-grid {
+        display: block;
+    }
 }
 
 /* end test url container stuff */
@@ -155,3 +175,9 @@
 }
 
 /* end map stuff */
+
+/* dataset list stuff */
+
+
+
+/* end dataset list stuff */

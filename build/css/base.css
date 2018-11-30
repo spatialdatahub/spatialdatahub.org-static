@@ -1,0 +1,22 @@
+header a {
+    color: white;
+}
+
+header {
+    background-color: #3f6cc1;
+    padding: 10px;
+
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: wrap;
+    align-items: center;
+}
+
+footer {
+    margin: 10px;
+
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: wrap;
+    align-items: center;
+}

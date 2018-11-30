@@ -8,7 +8,7 @@ import { feature, featureCollection } from '@turf/helpers';
 
 const showPlaceContainer = function (container) {
     container.style.display === 'none' || container.style.display === ''
-        ? container.style.display = 'block'
+        ? container.style.display = ''
         : container.style.display = 'none';
 }
 

@@ -9,19 +9,7 @@ a:link, a:visited  {
     text-decoration: none;
 }
 
-.header a {
-    color: white;
-}
 
-.header {
-    background-color: #3f6cc1;
-    padding: 10px;
-
-    display: flex;
-    justify-content: space-evenly;
-    flex-flow: wrap;
-    align-items: center;
-}
 
 .content {
     display: grid;
@@ -33,7 +21,7 @@ a:link, a:visited  {
 .main {
 }
 */
-
+/*
 .footer {
     margin: 10px;
 
@@ -42,6 +30,7 @@ a:link, a:visited  {
     flex-flow: wrap;
     align-items: center;
 }
+*/
 
 /* legacy dashboard.css stuff */
 
