@@ -51,7 +51,7 @@ import { getDatasetFilterParams } from './pieces/embed-filter.js';
 const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">
   OpenStreetMap</a>`,
-    minZoom: 2,
+    minZoom: 1,
     maxZoom: 19
 });
 
@@ -62,7 +62,7 @@ toner/{z}/{x}/{y}.{ext}`, {
   &mdash; Map data &copy;
   <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>`,
     subdomains: 'abcd',
-    minZoom: 2,
+    minZoom: 1,
     maxZoom: 19,
     ext: 'png'
 });
@@ -76,7 +76,7 @@ rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}`, {
 
 const myMap = L.map('mapid', {
     center: {lat: 0, lng: 8.8460},
-    zoom: 2,
+    zoom: 1,
     layers: osm,
     scrollWheelZoom: false
 });

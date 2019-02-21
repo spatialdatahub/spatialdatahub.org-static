@@ -29,8 +29,10 @@ a:link, a:visited  {
     grid-template-columns: 1fr 1fr;
 }
 
+/*
 .main {
 }
+*/
 
 .footer {
     margin: 10px;

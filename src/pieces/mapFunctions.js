@@ -132,7 +132,7 @@ L.Control.HomeButton = L.Control.extend({
         container.style.backgroundColor = 'white';
         container.style.width = '34px';
         container.style.height = '34px';
-        container.addEventListener('click', () => map.setView({lat: 0, lng: 0}, 2));
+        container.addEventListener('click', () => map.setView({lat: 0, lng: 0}, 1));
         return container;
     },
     onRemove: (map) => {
