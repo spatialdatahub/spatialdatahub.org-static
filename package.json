@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "build": "browserify src/bundle.js -t babelify -o build/js/bundle.js -t",
-    "build-and-move-files":"npm run build && cp build/js/bundle.js ../static/js/bundle.js",
+    "build-and-move-files": "npm run build && cp build/js/bundle.js ../static/js/bundle.js",
     "dev": "watchify src/bundle.js -t babelify -o build/js/bundle.js -t",
     "dev-filter": "watchify src/embed-filter.js -t babelify -o build/js/embed-filter.js -t",
     "test": "jest",
@@ -38,8 +38,8 @@
     "jest": "^22.4.2",
     "randomatic": ">=3.0.0",
     "regenerator-runtime": "^0.11.1",
-    "static-eval": ">=2.0.0",
-    "watchify": "^3.11.0"
+    "static-eval": "^2.0.1",
+    "watchify": "^3.11.1"
   },
   "dependencies": {
     "@mapbox/leaflet-omnivore": "^0.3.4",
