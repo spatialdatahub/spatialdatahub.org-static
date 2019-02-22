@@ -9,6 +9,7 @@
   "main": "index.js",
   "scripts": {
     "build": "browserify src/bundle.js -t babelify -o build/js/bundle.js -t",
+    "build-and-move-files":"npm run build && cp build/js/bundle.js ../static/js/bundle.js",
     "dev": "watchify src/bundle.js -t babelify -o build/js/bundle.js -t",
     "dev-filter": "watchify src/embed-filter.js -t babelify -o build/js/embed-filter.js -t",
     "test": "jest",
